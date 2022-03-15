@@ -22,17 +22,21 @@ import { breakpoints, FlexCenter, FlexColCenter } from '../styles/GlobalStyles';
 import { TYPE_IMAGE, TYPE_VIDEO } from '../utils/constantValue';
 import VideoBox from '../components/Widgets/Video/VideoBox';
 
-function getOrderedWidgetList(arr) {
+function getOrderedWidgetList(origin) {
   if (origin === null) {
     return null;
   }
-  arr.sort((a, b) => {
-    if (a.pos_y === b.pos_y) {
-      return a.pos_x > b.pos_x ? 1 : -1;
+  const arrY = origin.map((element) => element.pos_y);
+  arrY.sort();
+  let ordered = [];
+  for (let i = 0; i < arrY.length; i += 1) {
+    const arr = origin.filter((element) => element.pos_y === arrY[i]) || null;
+    if (arr.length !== 0) {
+      arr.sort((a, b) => (a.pos_x > b.pos_x ? 1 : -1));
+      ordered = ordered.concat(arr);
     }
-    return a.pos_y > b.pos_y ? 1 : -1;
-  });
-  return arr;
+  }
+  return ordered;
 }
 
 function NormalMode() {
