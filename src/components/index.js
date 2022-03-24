@@ -5,7 +5,6 @@ import ToolBar from './ToolBar/ToolBar';
 import ToolBarButton from './ToolBar/ToolBarButton';
 
 import Header from './Header/Header';
-import Footer from './Footer';
 import HeaderWrapper from './Header/HeaderWrapper';
 
 import NormalModeGrid from './GridLayout/NormalModeGrid';
@@ -17,7 +16,6 @@ import EditWrapper from './Wrapper/EditWrapper';
 import NormalWrapper from './Wrapper/NormalWrapper';
 
 import HandleKakaoLogin from './login/HandleKakaoLogin';
-import Login from './Login';
 
 export {
   PageWrapper,
@@ -33,6 +31,4 @@ export {
   YoutubeVideo,
   Image,
   HandleKakaoLogin,
-  Footer,
-  Login,
 };
