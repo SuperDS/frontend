@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import React, { useMemo, useState, useCallback } from 'react';
+import React, { useMemo, useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFloating, shift, offset } from '@floating-ui/react-dom';
 import { flip } from '@floating-ui/core';
@@ -32,6 +32,7 @@ const widgetDefaultValue = {
 function EditModeGrid() {
   const { addEmptyWidget } = useAddEmptyWidget();
   const windowWidth = useWindowSize().width;
+  // const windowHeight = useWindowSize().height;
   const minWindowWidth = useMemo(() => {
     if (windowWidth > 1124) {
       return windowWidth;
@@ -39,10 +40,10 @@ function EditModeGrid() {
       return 1124;
     }
   }, [windowWidth]);
-
   const [isWidgetOverlap, setIsWidgetOverlap] = useState(false);
   const [mouseOverWidget, setMouseOverWidget] = useState([widgetDefaultValue]);
   const [selectedWidget, setSelectedWidget] = useState(null);
+  const [gridHeight, setGridHeight] = useState(1);
   const { x, y, floating, reference, strategy, update } = useFloating({
     placement: 'top-start',
     middleware: [shift(), flip(), offset(25)],
@@ -53,6 +54,20 @@ function EditModeGrid() {
     widgets: state.info.widgets,
     modal: state.info.modal,
   }));
+
+  // Y축 스크롤에 따라서 height 늘려주기
+  useEffect(() => {
+    window.addEventListener('scroll', () => handleScrollWidth());
+    return () => {
+      window.removeEventListener('scroll', () => handleScrollWidth()); // clean up
+    };
+  }, []);
+
+  const handleScrollWidth = () => {
+    if (window.scrollY > 100) {
+      setGridHeight(window.scrollY);
+    }
+  };
 
   // delete처리 된 위젯 필터링
   const layoutInfo = useMemo(() => {
@@ -135,15 +150,15 @@ function EditModeGrid() {
       position: 'relative',
       top: '-5px',
       margin: '10',
-      width: '100%',
       minWidth: '1124px',
-      minHeight: `100vh`,
+      minHeight: `calc(150vh + ${gridHeight}px)`,
+      width: '100%',
       backgroundSize: `calc((${minWindowWidth}px - ${margin}px) / ${cols}) calc((${minWindowWidth}px - ${margin}px) / ${cols})`,
       backgroundPosition: `${margin / 2 - 1}px ${margin / 2 - 1}px`,
       backgroundImage: `linear-gradient(to right, #eee 2px, transparent 2px),
   linear-gradient(to bottom, #eee 2px, transparent 2px)`,
     }),
-    [minWindowWidth, margin, cols]
+    [minWindowWidth, margin, cols, gridHeight]
   );
   // grid공식 가로 calc((100% - ${margin}px) / ${cols}) calc((100% - ${margin}px - X좌표 스크롤바픽셀) / ${cols})
 
@@ -262,7 +277,6 @@ const mouseOverWidgetGuardStyle = css`
   border: 0;
   width: calc(100% + 13px);
   height: calc(100% + 13px);
-  ${'' /* background-color: rgba(0, 0, 0, 0); */}
   z-index: -999;
 `;
 
