@@ -35,7 +35,7 @@ function getOrderedWidgetList(arr) {
   return arr;
 }
 
-function NormalMode() {
+function NormalModePage() {
   const pageUrl = useGetUrl();
   const [userSeq, setUserSeq] = useState(null);
   const [userMatched, setUserMatched] = useState(null);
@@ -49,6 +49,8 @@ function NormalMode() {
 
   const [width, setWidth] = useState(window.innerWidth);
   const [mobileMode, setMobileMode] = useState(false);
+
+  // width에 따라서 모바일버전 on, off
   useEffect(() => {
     if (width) {
       if (width <= breakpoints[0]) {
@@ -59,29 +61,34 @@ function NormalMode() {
     }
     return () => setMobileMode(false);
   }, [width]);
-  const updateWidthAndHeight = () => {
-    setWidth(window.innerWidth);
-  };
 
+  // resize 이벤트 받아서 width 변경
   useEffect(() => {
-    window.addEventListener('resize', updateWidthAndHeight);
-    return () => window.removeEventListener('resize', updateWidthAndHeight);
+    window.addEventListener('resize', () => setWidth(window.innerWidth));
+    return () =>
+      window.removeEventListener('resize', () => setWidth(window.innerWidth));
   }, []);
 
+  // 인스타 그램용 사이즈 조절
   useEffect(() => {
     if (window.screen.width < window.innerWidth) {
       setWidth(window.screen.width);
     }
   }, []);
 
+  // 내 페이지인지 남의 페이지인지 확인 로직
   useEffect(() => {
+    // 로그인 유무
     if (pageUrl) {
+      // 내 페이지일 경우
       if (myInfo && urlMatched(myInfo.url, pageUrl)) {
         setUserMatched(true);
         setUserSeq(myInfo.user_seq);
         setNickname(myInfo.nickname);
+        // 다른 사람 페이지일 경우
       } else {
         setUserMatched(false);
+        // 해당 페이지 정보 가져옴 -> pageUserRes에 변화
         requestPageUserInfo();
       }
     }
@@ -92,6 +99,7 @@ function NormalMode() {
     };
   }, [pageUrl, myInfo]);
 
+  // pageUserRes에 변화가 있으면 -> 데이터를 받아서 userseq, nickname 세팅.
   useEffect(() => {
     if (pageUserRes && pageUserRes.data) {
       const { code, data, message } = pageUserRes.data;
@@ -112,11 +120,13 @@ function NormalMode() {
     };
   }, [pageUserRes]);
 
+  // 위젯 데이터 받아올 준비
   const { res: widgetRes, request: requestWidgetData } = useRequest({
     endpoint: `${getApiEndpoint()}/user/${userSeq}/widgets`,
     method: 'get',
   });
 
+  // 유저 시퀀스가 있으면 -> 해당 유저의 위젯 데이터 받아오기
   useEffect(() => {
     if (userSeq) {
       requestWidgetData();
@@ -125,12 +135,14 @@ function NormalMode() {
 
   const { save } = useSaveWidgetsFromServer();
 
+  // 받아온 위젯 데이터 리덕스에 저장 (-> 이건 고민을 좀 해봐야할 듯. 남의 페이지 들어갔을 경우는 저장할 필요 없음.)
   useEffect(() => {
     if (widgetRes) {
       save(widgetRes.data.widget_list);
     }
   }, [widgetRes]);
 
+  // 모바일 버전용 위젯 div
   const ThumbnailImage = useMemo(() => {
     if (widgetRes) {
       const { widget_list } = widgetRes.data;
@@ -182,7 +194,7 @@ function NormalMode() {
   );
 }
 
-export default NormalMode;
+export default NormalModePage;
 
 const ThumbnailImagesContainer = css`
   max-width: 100%;
