@@ -1,6 +1,18 @@
 import { css } from '@emotion/react';
 import facepaint from 'facepaint';
 
+export const BUTTON_COLOR = {
+  white: '#ffffff',
+  whiteSecond: '#f2f2f2',
+  whiteThird: '#c9c9c9',
+  grey: '#f2f2f2',
+  greySecond: '#c9c9c9',
+  greyThird: '#707070',
+  orange: '#ff3d00',
+  orangeSecond: '#ff754a',
+  orangeThird: '#c12e00',
+};
+
 export const COLOR_STYLE = {
   orange: '#ff3d00',
   veryLightPink: '#f2f2f2',
@@ -147,14 +159,6 @@ export const PageTitleMQ = () => {
     fontSize: [FONT_SIZE.s, FONT_SIZE.s, FONT_SIZE.m, FONT_SIZE.l],
   });
 };
-
-export const BackButton = css`
-  ${InitButtonStyle}
-  font-size: 1.2rem;
-  color: ${COLOR_STYLE.brownishGrey};
-  margin-bottom: 3vh;
-  font-weight: bold;
-`;
 
 export const closeBtn = css`
   top: 10px;
