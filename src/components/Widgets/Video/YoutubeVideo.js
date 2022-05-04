@@ -15,9 +15,8 @@ function YoutubeVideo({ embedId }) {
   // const autoplay = props.autoplay || 'autoplay=1';
   // const autoplay = 'autoplay=1';
   // const autoplay = props.autoplay || 'autoplay=0';
-  const autoplay = 'autoplay=1';
   const mute = 'mute=0';
-  const options = `?${reset_style}&${autoplay}&${mute}&${loop}`;
+  const options = `?${reset_style}&${mute}&${loop}`;
 
   return (
     <div css={radiusStyle}>
