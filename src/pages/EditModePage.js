@@ -1,16 +1,21 @@
+/** @jsxImportSource @emotion/react */
 import React, { useEffect, useState } from 'react';
+import { css, keyframes } from '@emotion/react';
 import { useHistory } from 'react-router';
 import { useSelector } from 'react-redux';
 import PopWidgets from '../components/Widgets/Pop/PopWidgets';
-import { PageWrapper, EditModeGrid, EditWrapper, Header } from '../components';
+import { PageWrapper, EditModeGrid, EditWrapper } from '../components';
 import { getApiEndpoint, urlMatched } from '../utils/util';
 import { useRequestAuth } from '../hooks/useRequestAuth';
-import { useSaveWidgetsFromServer } from '../hooks/widget';
+import { usePostData, useSaveWidgetsFromServer } from '../hooks/widget';
 import { useGetUrl } from '../hooks/util';
 import { useMyInfo } from '../hooks/myInfo';
+import { mainColor } from '../styles/color';
+import { edit_toggle } from '../asset';
 
 function EditMode() {
-  const { modal } = useSelector((state) => ({
+  const { widgets, modal } = useSelector((state) => ({
+    widgets: state.info.widgets,
     modal: state.info.modal,
   }));
   const pageUrl = useGetUrl();
@@ -18,7 +23,9 @@ function EditMode() {
   const [userMatched, setUserMatched] = useState(null);
   const history = useHistory();
   const { myInfo } = useMyInfo();
-
+  const { post } = usePostData();
+  const [statAnimationStart, setStatAnimationStart] = useState(0);
+  const [statAnimationEnd, setStatAnimationEnd] = useState(0);
   useEffect(() => {
     if (pageUrl && myInfo) {
       if (myInfo && urlMatched(myInfo.url, pageUrl)) {
@@ -54,9 +61,63 @@ function EditMode() {
     }
   }, [widgetRes]);
 
+  const moveAnimationHidden = keyframes`
+  0% {
+    transform: translateX(${statAnimationStart}px);
+  }
+ 100% {
+  transform: translateX(${statAnimationEnd}px);
+  }
+`;
+
+  const moveHidden = css`
+    animation-name: ${moveAnimationHidden};
+    animation-duration: 1s;
+    animation-direction: normal;
+    transition-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+  `;
   return (
     <PageWrapper>
-      {userMatched && <Header userMatch pageUrl={pageUrl} pageType='edit' />}
+      {userMatched && (
+        <>
+          <div css={[positionFixed]}>
+            <div css={[overflowHidden]}>
+              <button
+                type='button'
+                css={[commonButtonStyle, moveHidden]}
+                onClick={() => {
+                  history.push(`/${pageUrl}`);
+                }}
+              >
+                변경 취소
+              </button>
+              <button
+                type='button'
+                css={[commonButtonStyle, moveHidden]}
+                onClick={() => post(widgets.list)}
+              >
+                저장하기
+              </button>
+            </div>
+            <button
+              type='button'
+              css={[hiddenButton]}
+              onClick={() => {
+                if (statAnimationEnd === 0) {
+                  setStatAnimationStart(0);
+                  setStatAnimationEnd(400);
+                } else {
+                  setStatAnimationStart(400);
+                  setStatAnimationEnd(0);
+                }
+              }}
+            >
+              <img src={edit_toggle} css={[toggle]} />
+            </button>
+          </div>
+        </>
+      )}
       <EditWrapper>
         {modal.popUpWindow && <PopWidgets />}
         <EditModeGrid />
@@ -66,3 +127,56 @@ function EditMode() {
 }
 
 export default EditMode;
+
+const positionFixed = css`
+  display: flex;
+  align-items: center;
+  position: fixed;
+  top: 28px;
+  right: 50px;
+  z-index: 999;
+`;
+
+const overflowHidden = css`
+  overflow: hidden;
+`;
+
+const commonButtonStyle = css`
+  display: inline-block;
+  text-align: justify;
+  width: fit-content;
+  padding: 6.75px 33px;
+  margin-right: 10px;
+  background-color: #fff;
+  height: 35px;
+  border-radius: 17px;
+  border: solid 1px #c9c9c9;
+  font-size: 13.5px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1;
+  letter-spacing: normal;
+  color: #000;
+  &:hover {
+    color: #fff;
+    background-color: ${mainColor};
+  }
+`;
+
+const hiddenButton = css`
+  height: 34px;
+  width: 34px;
+  background-color: #c9c9c9;
+  border-radius: 50%;
+  border: none;
+  padding: 0px;
+  &:hover {
+    background-color: #707070;
+  }
+`;
+
+const toggle = css`
+  height: 34px;
+  width: 34px;
+`;

@@ -7,20 +7,17 @@ import { HeaderWrapper } from '..';
 import { logo, mypage } from '../../asset';
 import { getApiEndpoint, logout } from '../../utils/util';
 import { useMyInfo } from '../../hooks/myInfo';
-import { usePostData } from '../../hooks/widget';
 import { createReplacementModalAction } from '../../redux/slice';
 import Login from '../Login';
 
 function Header({ userMatch, pageUrl, pageUserName, pageType }) {
   const history = useHistory();
-  const { widgets, modal } = useSelector((state) => ({
-    widgets: state.info.widgets,
+  const { modal } = useSelector((state) => ({
     modal: state.info.modal,
   }));
   const dispatch = useDispatch();
 
   const { loggedIn, myInfo } = useMyInfo();
-  const { post } = usePostData();
 
   const goToMyPage = useMemo(() => {
     if (myInfo) {
@@ -193,34 +190,6 @@ function Header({ userMatch, pageUrl, pageUserName, pageType }) {
     </>
   );
 
-  const editHeader = (
-    <>
-      <div css={[flex, flexBtw]}>
-        <a href='/main' css={[marginLeft17, height21]}>
-          <img alt='img' src={logo} css={hieght100p} />
-        </a>
-        <div>
-          <button
-            type='button'
-            css={[commonButtonStyle, confirmButtonWidth, marginRight40]}
-            onClick={() => {
-              history.push(`/${pageUrl}`);
-            }}
-          >
-            저장하지 않고 나가기
-          </button>
-          <button
-            type='button'
-            css={[commonButtonStyle, confirmButtonWidth, marginRight39]}
-            onClick={() => post(widgets.list)}
-          >
-            저장
-          </button>
-        </div>
-      </div>
-    </>
-  );
-
   const loggedInFeedbackHeader = useMemo(() => {
     if (loggedIn)
       return (
@@ -279,8 +248,6 @@ function Header({ userMatch, pageUrl, pageUserName, pageType }) {
       return mainHeader;
     } else if (pageType === 'normal') {
       return normalHeader;
-    } else if (pageType === 'edit') {
-      return editHeader;
     } else if (pageType === 'feedback') {
       return feedbackHeader;
     } else {

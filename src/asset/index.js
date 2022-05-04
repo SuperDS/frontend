@@ -30,6 +30,8 @@ import OrangeN from './OrangeN.svg';
 import OrangeO from './OrangeO.svg';
 import OrangeT from './OrangeT.svg';
 import OwnWeb from './OwnWeb.svg';
+import edit_toggle from './edit_toggle.svg';
+import edit_toggle_hover from './edit_toggle_hover.svg';
 
 export {
   arrow_left,
@@ -64,4 +66,6 @@ export {
   OrangeO,
   OrangeT,
   OwnWeb,
+  edit_toggle,
+  edit_toggle_hover,
 };
