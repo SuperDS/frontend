@@ -204,7 +204,16 @@ function Header({ userMatch, pageUrl, pageUserName, pageType }) {
           <button
             type='button'
             css={[commonButtonStyle, confirmButtonWidth, marginRight39]}
-            onClick={() => history.push(`/join`)}
+            onClick={() =>
+              history.push({
+                pathname: '/join',
+                state: {
+                  endpoint: `${getApiEndpoint()}/auth/join/local`,
+                  joinType: 'local',
+                  userEmail: null,
+                },
+              })
+            }
           >
             회원가입
           </button>
