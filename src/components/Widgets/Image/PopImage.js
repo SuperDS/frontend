@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { css } from '@emotion/react';
 import {
   COLOR_STYLE,
@@ -12,6 +12,7 @@ import {
   getAbsoluteBtn,
   SHADOW_STYLE,
   BasicInputStyle,
+  DisplayNone,
 } from '../../../styles/GlobalStyles';
 import { useInitWidget, usePostImage } from '../../../hooks/widget';
 import { TYPE_IMAGE } from '../../../utils/constantValue';
@@ -62,6 +63,11 @@ function PopImage(props) {
   };
 
   const { btn, img } = getAbsoluteBtn(25, 42, 25);
+  const imageInput = useRef();
+
+  const onClickFileInput = () => {
+    imageInput.current.click();
+  };
 
   return (
     <div css={[Container]}>
@@ -104,19 +110,30 @@ function PopImage(props) {
             name='thumbnail'
             value={thumbnail}
             css={[urlInputStyle]}
-            placeholder='링크를 입력해주세요'
+            placeholder='이미지 링크를 입력해주세요'
             onChange={handleThumbChange}
             onKeyDown={handleKeyDown}
           />
         )}
         {isLocalUpload && (
-          <input
-            type='file'
-            name='imgae_file'
-            accept='image/png, image/jpeg, image/gif'
-            css={urlInputStyle}
-            onChange={handleLocalUpload}
-          />
+          <>
+            <button
+              type='button'
+              css={[urlInputStyle, fontColorGrey]}
+              onClick={onClickFileInput}
+            >
+              클릭하여 이미지 선택하기
+            </button>
+            <input
+              id='file'
+              type='file'
+              name='imgae_file'
+              accept='image/png, image/jpeg, image/gif'
+              css={DisplayNone}
+              onChange={handleLocalUpload}
+              ref={imageInput}
+            />
+          </>
         )}
 
         <button
@@ -172,9 +189,14 @@ const PopUpBody = css`
 const urlInputStyle = css`
   ${BasicInputStyle}
   width: 80%;
-  height: 24px;
+  height: 40px;
   margin: 28px 15px 32px 0;
   padding: 8px 17px;
+  box-sizing: border-box;
+`;
+
+const fontColorGrey = css`
+  color: #707070;
 `;
 
 function textColor(selected) {

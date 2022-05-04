@@ -3,7 +3,7 @@ import { useMemo, useState } from 'react';
 import { css } from '@emotion/react';
 import { useHistory } from 'react-router';
 import { HeaderWrapper } from '..';
-import { logo, mypage } from '../../asset';
+import { logo } from '../../asset';
 import { getApiEndpoint, logout } from '../../utils/util';
 import { useMyInfo } from '../../hooks/myInfo';
 import Login from '../Login';
@@ -16,8 +16,12 @@ function Header({ userMatch, pageUrl, pageUserName, pageType }) {
   const goToMyPage = useMemo(() => {
     if (myInfo) {
       return (
-        <button type='button' onClick={() => history.push(`/${myInfo.url}`)}>
-          <img alt='img' src={mypage} css={height21} />
+        <button
+          type='button'
+          css={[commonButtonStyle, marginRight39]}
+          onClick={() => history.push(`/${myInfo.url}`)}
+        >
+          내 페이지로 가기
         </button>
       );
     }
