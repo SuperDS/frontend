@@ -1,24 +1,18 @@
 /** @jsxImportSource @emotion/react */
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { css } from '@emotion/react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { HeaderWrapper } from '..';
 import { logo, mypage } from '../../asset';
 import { getApiEndpoint, logout } from '../../utils/util';
 import { useMyInfo } from '../../hooks/myInfo';
-import { createReplacementModalAction } from '../../redux/slice';
 import Login from '../Login';
 
 function Header({ userMatch, pageUrl, pageUserName, pageType }) {
   const history = useHistory();
-  const { modal } = useSelector((state) => ({
-    modal: state.info.modal,
-  }));
-  const dispatch = useDispatch();
+  const [popUpLogin, setPopUpLogin] = useState(false);
 
   const { loggedIn, myInfo } = useMyInfo();
-
   const goToMyPage = useMemo(() => {
     if (myInfo) {
       return (
@@ -31,21 +25,8 @@ function Header({ userMatch, pageUrl, pageUserName, pageType }) {
   }, [myInfo]);
 
   function makeLogInbar() {
-    if (modal.popUpLogin) {
-      dispatch(
-        createReplacementModalAction({
-          ...modal,
-          popUpLogin: false,
-        })
-      );
-    } else if (!modal.popUpLogin) {
-      dispatch(
-        createReplacementModalAction({
-          ...modal,
-          popUpLogin: true,
-        })
-      );
-    }
+    if (popUpLogin) setPopUpLogin(false);
+    else setPopUpLogin(true);
   }
 
   const loginWindowCSS = css`
@@ -152,7 +133,7 @@ function Header({ userMatch, pageUrl, pageUserName, pageType }) {
           <div />
         </div>
       </div>
-      {modal.popUpLogin ? loginPopupWindow : <></>}
+      {popUpLogin ? loginPopupWindow : <></>}
     </>
   );
 
@@ -239,7 +220,7 @@ function Header({ userMatch, pageUrl, pageUserName, pageType }) {
         </a>
         {loggedInFeedbackHeader}
       </div>
-      {modal.popUpLogin ? loginPopupWindow : <></>}
+      {popUpLogin ? loginPopupWindow : <></>}
     </>
   );
 
