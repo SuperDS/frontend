@@ -12,3 +12,4 @@ export const TYPE_MOUSE = -1;
 export const TYPE_NEW = 0;
 export const TYPE_IMAGE = 1;
 export const TYPE_VIDEO = 2;
+export const TYPE_TEXT = 3;
