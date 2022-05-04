@@ -28,6 +28,7 @@ function FeedbackInputBox() {
   function sendQnA() {
     if (loggedIn) {
       request();
+      alert('피드백이 전송되었습니다.');
     } else {
       sendAlert();
     }

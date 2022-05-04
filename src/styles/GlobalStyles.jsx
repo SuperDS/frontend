@@ -120,6 +120,14 @@ export const DisplayNone = css`
   display: none;
 `;
 
+export const DisplayBlock = css`
+  display: block;
+`;
+
+export const DisplayInlineBlock = css`
+  display: inline-block;
+`;
+
 export const DisplayUnset = css`
   display: unset;
 `;
