@@ -14,7 +14,7 @@ function FeedbackInputBox() {
   const endpoint = `${getApiEndpoint()}/feedback/register`;
 
   const { res, request } = useRequestAuth({
-    endpoint,
+    endpoint: endpoint,
     method: 'post',
     data: {
       content: inputmessage,

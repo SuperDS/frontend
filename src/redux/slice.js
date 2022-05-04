@@ -14,7 +14,6 @@ const slice = createSlice({
       imgChangeTargetId: '-1',
       popUpWindow: false,
       popUpWindowType: 'default',
-      popUpLogin: false,
     },
     widgets: {
       count: 0,

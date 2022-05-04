@@ -15,9 +15,9 @@ function shuffleArray(array) {
 function FeedbackList() {
   const [feedbacks, setFeedbacks] = useState(null);
   const [listDiv, setListdiv] = useState(<div />);
-  const listDivOne = [{ feedback_seq: -1 }];
-  const listDivTwo = [{ feedback_seq: -2 }];
-  const listDivThree = [{ feedback_seq: -3 }];
+  const listDivOne = [];
+  const listDivTwo = [];
+  const listDivThree = [];
 
   // 데이터 받아오는 코드 추가 예정
   useEffect(() => {
@@ -62,67 +62,16 @@ function FeedbackList() {
   }, [feedbacks]);
 
   function divideList() {
-    return [listDivOne, listDivTwo, listDivThree].map((list) => {
-      if (list[0]) {
-        return (
-          <FeedbackListCol key={list[0].feedback_seq}>
-            {list.map((Feedback) => {
-              if (Feedback.feedback_seq > 0) {
-                return (
-                  <li key={Feedback.feedback_seq} css={listItem}>
-                    <div css={[FeedbackBoxCss, randomColor()]}>
-                      <div css={orderWrapper}>
-                        <p css={orderFont}>{Feedback.feedback_seq}번째 바람</p>
-                      </div>
-                      <p css={contentsWrapper}>{Feedback.content}</p>
-                    </div>
-                  </li>
-                );
-              }
-              return <></>;
-            })}
-          </FeedbackListCol>
-        );
+    return [listDivOne, listDivTwo, listDivThree].map((list, index) => {
+      if (list.length) {
+        return <FeedbackListCol key={list[0].feedback_seq} list={list} />;
       }
-      return <></>;
+      const uniqKey = index * 1000;
+      return <FeedbackListCol key={uniqKey} list={[]} />;
     });
   }
 
   return <div css={ContentBox}>{listDiv}</div>;
-}
-
-const blueColor = css`
-  background-color: #507fe9;
-  color: black;
-`;
-const yellowColor = css`
-  background-color: #ffd376;
-  color: black;
-`;
-const blackColor = css`
-  background-color: #2e2e2e;
-  color: white;
-`;
-const orangeColor = css`
-  background-color: #ed754a;
-  color: black;
-`;
-const greenColor = css`
-  background-color: #84bfa4;
-  color: black;
-`;
-
-const colors = [blueColor, yellowColor, blackColor, orangeColor, greenColor];
-
-let prevColorIndex = null;
-
-function randomColor() {
-  let index = prevColorIndex;
-  while (index === prevColorIndex) {
-    index = Math.floor(Math.random() * 5);
-  }
-  prevColorIndex = index;
-  return colors[index];
 }
 
 const ContentBox = css`
@@ -133,44 +82,6 @@ const ContentBox = css`
   flex-wrap: wrap;
   gap: 20px;
   box-sizing: border-box;
-`;
-
-const listItem = css`
-  opacity: 1;
-  transform: translate3d(0px, 0px, 0px);
-  padding-bottom: 20px;
-`;
-
-const FeedbackBoxCss = css`
-  padding: 17px 20px;
-  word-break: break-all;
-  border-bottom-right-radius: 40px;
-`;
-
-const orderWrapper = css`
-  display: flex;
-  -webkit-box-align: center;
-  align-items: center;
-  height: 20px;
-  margin-bottom: 10px;
-`;
-
-const orderFont = css`
-  display: inline-block;
-  padding: 0px;
-  margin: 0px;
-  font-size: 14px;
-  font-weight: 700;
-  line-height: 1.4;
-  letter-spacing: 0.6px;
-`;
-
-const contentsWrapper = css`
-  display: block;
-  margin: 11px 0px 0px;
-  font-size: 15px;
-  font-weight: 500;
-  line-height: 1.4;
 `;
 
 export default FeedbackList;
