@@ -30,7 +30,6 @@
     "web-vitals": "^1.0.1",
     "@ckeditor/ckeditor5-build-inline": "^33.0.0",
     "@ckeditor/ckeditor5-react": "^4.0.1"
-
   },
   "scripts": {
     "start": "cross-env NODE_PATH=src react-scripts start",
