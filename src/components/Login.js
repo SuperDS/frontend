@@ -19,29 +19,6 @@ function Login() {
     setPasswordValue(event.currentTarget.value);
   const onEmailChange = (event) => setEmailValue(event.currentTarget.value);
 
-  // const [showPassword, setShowPassword] = useState(false);
-
-  // const email = useInput({
-  //   inputType: 'email',
-  //   id: 'email',
-  //   type: 'email',
-  // });
-
-  // const password = useInput({
-  //   inputType: 'password',
-  //   id: 'password',
-  //   type: showPassword ? 'text' : 'password',
-  //   button: (
-  //     <button
-  //       type='button'
-  //       css={InitButtonStyle}
-  //       onClick={() => setShowPassword(!showPassword)}
-  //     >
-  //       {showPassword ? '비밀번호 숨기기' : '비밀번호 보기'}
-  //     </button>
-  //   ),
-  // });
-
   const endpointLogin = `${getApiEndpoint()}/auth/login/local`;
   const { res, request } = useRequest({
     endpoint: endpointLogin,
@@ -190,19 +167,6 @@ const contentBox = css`
   margin: 0 auto;
   box-sizing: border-box;
 `;
-
-// const Container = {
-//   textAlign: 'center',
-//   position: 'relative',
-//   width: '400px',
-//   height: '415px',
-//   boxSizing: 'border-box',
-//   verticalAlignt: 'middle',
-//   borderRadius: '2px',
-//   backgroundColor: 'rgba(254, 245, 238, 1)',
-//   boxShadow: '15px 15px 42px 0px rgb(190,190,190)',
-//   padding: '72px 24px 0',
-// };
 
 const commonInputBoxStyle = css`
   width: 100%;
