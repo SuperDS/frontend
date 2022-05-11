@@ -32,7 +32,7 @@ const widgetDefaultValue = {
 function EditModeGrid() {
   const { addEmptyWidget } = useAddEmptyWidget();
   const windowWidth = useWindowSize().width;
-  // const windowHeight = useWindowSize().height;
+  // min-width 지정;
   const minWindowWidth = useMemo(() => {
     if (windowWidth > 1124) {
       return windowWidth;
@@ -40,11 +40,20 @@ function EditModeGrid() {
       return 1124;
     }
   }, [windowWidth]);
+  // mouseOver위젯(빈 공간 클릭 시 나오는 위젯)과 보통의 위젯이 겹치는 지 판단해주는 state
   const [isWidgetOverlap, setIsWidgetOverlap] = useState(false);
   const [mouseOverWidget, setMouseOverWidget] = useState([widgetDefaultValue]);
+  // toolBar 선택위한 위젯
   const [selectedWidget, setSelectedWidget] = useState(null);
   const [gridHeight, setGridHeight] = useState(1);
-  const { x, y, floating, reference, strategy, update } = useFloating({
+  const {
+    x,
+    y,
+    floating,
+    reference,
+    strategy,
+    update: updateFloatingUi,
+  } = useFloating({
     placement: 'top-start',
     middleware: [shift(), flip(), offset(25)],
   });
@@ -79,9 +88,11 @@ function EditModeGrid() {
 
   // 빈 그리드 클릭 시 빈 위젯 생성
   const makeNewWidgetEvent = () => {
+    console.log(isWidgetOverlap);
     if (selectedWidget) {
       setSelectedWidget(null);
-    } else if (isWidgetOverlap === false) {
+    }
+    if (isWidgetOverlap === false) {
       addEmptyWidget(mouseOverWidget);
     }
   };
@@ -136,10 +147,6 @@ function EditModeGrid() {
       setMouseOverWidget([widgetDefaultValue]);
     }
     updateFloatingUi();
-  };
-
-  const updateFloatingUi = () => {
-    update();
   };
 
   // about grid style
@@ -197,7 +204,7 @@ function EditModeGrid() {
             ref={(ref) => {
               if (ref && element.i === selectedWidget) {
                 reference(ref);
-                update();
+                updateFloatingUi();
               }
             }}
           >

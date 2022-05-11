@@ -15,14 +15,16 @@ import {
   TYPE_VIDEO,
   TYPE_NONEDISPLAY,
   TYPE_NEW,
+  TYPE_TEXT,
 } from '../../utils/constantValue';
 import ImageBox from './Image/ImageBox';
 import VideoBox from './Video/VideoBox';
 import MouseOverBox from './MouseOver/MouseOverBox';
 import NewBox from './New/NewBox';
 import { WIDGET_COMMON_RADIUS } from '../../styles/style';
-import { convertType2String, isTmpWidget } from '../../utils/util';
+import { convertType2String, isNewWidget } from '../../utils/util';
 import { commonBtn, getAbsoluteBtn } from '../../styles/GlobalStyles';
+import TextBox from './Text/TextBox';
 
 export function WidgetElement({
   element,
@@ -89,6 +91,8 @@ export function WidgetElement({
       return <VideoBox element={element} mode={mode} />;
     } else if (curInfo.widget_type === TYPE_MOUSE) {
       return <MouseOverBox element={element} />;
+    } else if (curInfo.widget_type === TYPE_TEXT) {
+      return <TextBox />;
     } else if (curInfo.widget_type === TYPE_NONEDISPLAY) {
       return <></>;
     } else {
@@ -111,9 +115,10 @@ export function WidgetElement({
     5,
     diameter / 2
   );
+
   return (
     <div
-      key={parseInt(layout.i, 10)}
+      key={layout.i}
       css={[widgetFrame]}
       onMouseEnter={() => {
         setHover(true);
@@ -129,8 +134,7 @@ export function WidgetElement({
             type='button'
             css={[commonBtn, btn]}
             onClick={() => {
-              const newWidgetList = getNewWidgetList(layout.i, 'D');
-              updateWidgets(newWidgetList);
+              updateWidgets(getNewWidgetList(layout.i, 'D'));
               setIsWidgetOverlap(false);
             }}
           >
@@ -142,14 +146,13 @@ export function WidgetElement({
             type='button'
             css={[commonBtn, settingBtn]}
             onClick={() => {
-              if (isTmpWidget(layout.widget_type)) {
+              if (isNewWidget(layout.widget_type)) {
                 openEditWindow(layout.i);
                 setSelectedWidget(layout.i);
               } else {
                 openEditModalByType(layout.i, layout.widget_type);
               }
-              const newWidgetList = getNewWidgetList(layout.i, 'E');
-              updateWidgets(newWidgetList);
+              updateWidgets(getNewWidgetList(layout.i, 'E'));
             }}
           >
             <div css={settingBtnImg}>

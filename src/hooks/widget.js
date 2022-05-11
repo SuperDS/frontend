@@ -174,6 +174,7 @@ export function usePostImage() {
   };
 }
 
+// 위젯 상태 불러와서
 export function useAddEmptyWidget() {
   const { widgets } = useSelector((state) => ({
     widgets: state.info.widgets,
@@ -192,12 +193,17 @@ export function useAddEmptyWidget() {
       w: 1,
       h: 1,
     };
-    updateWidgets([...widgets.list, newWidget]);
+    const converted = widgets.list.filter(
+      (element) => element.widget_type !== TYPE_NEW
+    );
+    console.table(converted);
+    updateWidgets([...converted, newWidget]);
   };
   return {
     addEmptyWidget,
   };
 }
+
 export function useRemoveEmptyWidget() {
   const { widgets } = useSelector((state) => ({
     widgets: state.info.widgets,
@@ -205,9 +211,9 @@ export function useRemoveEmptyWidget() {
   const { updateWidgets } = useUpdateWidgetsData();
 
   const removeEmptyWidget = () => {
-    const converted = widgets.list.filter(function (element) {
-      return element.widget_type !== TYPE_NEW;
-    });
+    const converted = widgets.list.filter(
+      (element) => element.widget_type !== TYPE_NEW
+    );
     updateWidgets(converted);
   };
 
