@@ -174,7 +174,7 @@ export function usePostImage() {
   };
 }
 
-// 위젯 상태 불러와서
+// 빈 위젯 위치 업데이트
 export function useAddEmptyWidget() {
   const { widgets } = useSelector((state) => ({
     widgets: state.info.widgets,
@@ -196,28 +196,9 @@ export function useAddEmptyWidget() {
     const converted = widgets.list.filter(
       (element) => element.widget_type !== TYPE_NEW
     );
-    console.table(converted);
     updateWidgets([...converted, newWidget]);
   };
   return {
     addEmptyWidget,
-  };
-}
-
-export function useRemoveEmptyWidget() {
-  const { widgets } = useSelector((state) => ({
-    widgets: state.info.widgets,
-  }));
-  const { updateWidgets } = useUpdateWidgetsData();
-
-  const removeEmptyWidget = () => {
-    const converted = widgets.list.filter(
-      (element) => element.widget_type !== TYPE_NEW
-    );
-    updateWidgets(converted);
-  };
-
-  return {
-    removeEmptyWidget,
   };
 }

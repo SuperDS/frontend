@@ -88,7 +88,6 @@ function EditModeGrid() {
 
   // 빈 그리드 클릭 시 빈 위젯 생성
   const makeNewWidgetEvent = () => {
-    console.log(isWidgetOverlap);
     if (selectedWidget) {
       setSelectedWidget(null);
     }

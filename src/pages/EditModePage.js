@@ -167,16 +167,16 @@ const commonButtonStyle = css`
 const hiddenButton = css`
   height: 34px;
   width: 34px;
-  background-color: #c9c9c9;
   border-radius: 50%;
   border: none;
   padding: 0px;
-  &:hover {
-    background-color: #707070;
-  }
+  overflow: hidden;
 `;
 
 const toggle = css`
-  height: 34px;
+  height: 68px;
   width: 34px;
+  &:hover {
+    margin-top: -34px;
+  }
 `;

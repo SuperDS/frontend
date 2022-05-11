@@ -31,7 +31,6 @@ import OrangeO from './OrangeO.svg';
 import OrangeT from './OrangeT.svg';
 import OwnWeb from './OwnWeb.svg';
 import edit_toggle from './edit_toggle.svg';
-import edit_toggle_hover from './edit_toggle_hover.svg';
 import newWidgetNotice from './newWidgetNotice.svg';
 
 export {
@@ -68,6 +67,5 @@ export {
   OrangeT,
   OwnWeb,
   edit_toggle,
-  edit_toggle_hover,
   newWidgetNotice,
 };
