@@ -26,6 +26,7 @@ function EditMode() {
   const { post } = usePostData();
   const [statAnimationStart, setStatAnimationStart] = useState(0);
   const [statAnimationEnd, setStatAnimationEnd] = useState(0);
+  const [isAnimationEnd, setIsAnimationEnd] = useState(false);
   useEffect(() => {
     if (pageUrl && myInfo) {
       if (myInfo && urlMatched(myInfo.url, pageUrl)) {
@@ -77,29 +78,39 @@ function EditMode() {
     transition-timing-function: ease-in-out;
     animation-fill-mode: forwards;
   `;
+
+  const removeButtonAfterAnimation = () => {
+    if (isAnimationEnd === false)
+      setTimeout(() => {
+        setIsAnimationEnd(true);
+      }, 1000);
+    else setIsAnimationEnd(false);
+  };
   return (
     <PageWrapper>
       {userMatched && (
         <>
           <div css={[positionFixed]}>
-            <div css={[overflowHidden]}>
-              <button
-                type='button'
-                css={[commonButtonStyle, moveHidden]}
-                onClick={() => {
-                  history.push(`/${pageUrl}`);
-                }}
-              >
-                변경 취소
-              </button>
-              <button
-                type='button'
-                css={[commonButtonStyle, moveHidden]}
-                onClick={() => post(widgets.list)}
-              >
-                저장하기
-              </button>
-            </div>
+            {!isAnimationEnd && (
+              <div css={[overflowHidden]}>
+                <button
+                  type='button'
+                  css={[commonButtonStyle, moveHidden]}
+                  onClick={() => {
+                    history.push(`/${pageUrl}`);
+                  }}
+                >
+                  변경 취소
+                </button>
+                <button
+                  type='button'
+                  css={[commonButtonStyle, moveHidden]}
+                  onClick={() => post(widgets.list)}
+                >
+                  저장하기
+                </button>
+              </div>
+            )}
             <button
               type='button'
               css={[hiddenButton]}
@@ -107,7 +118,9 @@ function EditMode() {
                 if (statAnimationEnd === 0) {
                   setStatAnimationStart(0);
                   setStatAnimationEnd(400);
+                  removeButtonAfterAnimation();
                 } else {
+                  removeButtonAfterAnimation();
                   setStatAnimationStart(400);
                   setStatAnimationEnd(0);
                 }

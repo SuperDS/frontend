@@ -122,8 +122,11 @@ function PopImage(props) {
               css={[urlInputStyle, fontColorGrey]}
               onClick={onClickFileInput}
             >
-              클릭하여 이미지 선택하기
+              {localFiles === null
+                ? '클릭하여 이미지 선택하기'
+                : localFiles[0].name}
             </button>
+
             <input
               id='file'
               type='file'
