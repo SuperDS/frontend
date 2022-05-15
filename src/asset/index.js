@@ -1,5 +1,7 @@
 import arrow_left from './arrow_left.svg';
 import logo from './logo.svg';
+import logo_gray from './bi_grey.svg';
+import logoImg from './logoImg.svg';
 import img from './image.svg';
 import video from './video.svg';
 import calendar from './calendar.svg';
@@ -9,7 +11,6 @@ import todolist from './todolist.svg';
 import pin from './pin.svg';
 import mypage from './mypage.svg';
 import search from './search.svg';
-import logo_gray from './bi_grey.svg';
 import setting from './setting.svg';
 import setting_btn from './setting_btn.svg';
 import settingSet from './settingSet.svg';
@@ -31,12 +32,13 @@ import OrangeO from './OrangeO.svg';
 import OrangeT from './OrangeT.svg';
 import OwnWeb from './OwnWeb.svg';
 import edit_toggle from './edit_toggle.svg';
-import edit_toggle_hover from './edit_toggle_hover.svg';
 import newWidgetNotice from './newWidgetNotice.svg';
 
 export {
   arrow_left,
   logo,
+  logo_gray,
+  logoImg,
   img,
   video,
   calendar,
@@ -46,7 +48,6 @@ export {
   pin,
   mypage,
   search,
-  logo_gray,
   setting,
   setting_btn,
   settingSet,
@@ -68,6 +69,5 @@ export {
   OrangeT,
   OwnWeb,
   edit_toggle,
-  edit_toggle_hover,
   newWidgetNotice,
 };

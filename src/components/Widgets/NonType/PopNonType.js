@@ -2,6 +2,7 @@
 import React from 'react';
 import { css } from '@emotion/react';
 import {
+  COLOR_STYLE,
   commonBtn,
   FlexColCenter,
   getAbsoluteBtn,
@@ -41,8 +42,12 @@ function PopNonType(props) {
   );
 }
 const TempMessage = css`
+  font-size: 1rem;
+  word-break: keep-all;
+  font-weight: bold;
+  color: ${COLOR_STYLE.brownishGrey};
   margin-top: 50px;
-  margin-bottom: 40px;
+  margin-bottom: 60px;
 `;
 
 const Container = css`

@@ -24,8 +24,10 @@ function EditMode() {
   const history = useHistory();
   const { myInfo } = useMyInfo();
   const { post } = usePostData();
-  const [statAnimationStart, setStatAnimationStart] = useState(0);
+  const [statAnimationStart, setStatAnimationStart] = useState(400);
   const [statAnimationEnd, setStatAnimationEnd] = useState(0);
+  const [isAnimationEnd, setIsAnimationEnd] = useState(false);
+  const [timeoutId, setTimeoutId] = useState(0);
   useEffect(() => {
     if (pageUrl && myInfo) {
       if (myInfo && urlMatched(myInfo.url, pageUrl)) {
@@ -77,39 +79,60 @@ function EditMode() {
     transition-timing-function: ease-in-out;
     animation-fill-mode: forwards;
   `;
+
+  // 애니메이션 끝난 후 div 없애는 함수, 다시 만듦
+  const buttonMoveAnimation = () => {
+    if (statAnimationStart === 400 && isAnimationEnd === false) {
+      setTimeoutId(
+        setTimeout(() => {
+          setIsAnimationEnd(true);
+        }, 1000)
+      );
+      setStatAnimationStart(0);
+      setStatAnimationEnd(400);
+    } else if (statAnimationStart === 0 && isAnimationEnd === true) {
+      setIsAnimationEnd(false);
+      setStatAnimationStart(400);
+      setStatAnimationEnd(0);
+    } else if (statAnimationStart === 0 && isAnimationEnd === false) {
+      clearTimeout(timeoutId);
+      setStatAnimationStart(400);
+      setStatAnimationEnd(0);
+    }
+  };
   return (
     <PageWrapper>
       {userMatched && (
         <>
           <div css={[positionFixed]}>
-            <div css={[overflowHidden]}>
-              <button
-                type='button'
-                css={[commonButtonStyle, moveHidden]}
-                onClick={() => {
-                  history.push(`/${pageUrl}`);
-                }}
-              >
-                변경 취소
-              </button>
-              <button
-                type='button'
-                css={[commonButtonStyle, moveHidden]}
-                onClick={() => post(widgets.list)}
-              >
-                저장하기
-              </button>
-            </div>
+            {!isAnimationEnd && (
+              <div css={[overflowHidden]}>
+                <button
+                  type='button'
+                  css={[commonButtonStyle, moveHidden]}
+                  onClick={() => {
+                    history.push(`/${pageUrl}`);
+                  }}
+                >
+                  변경 취소
+                </button>
+                <button
+                  type='button'
+                  css={[commonButtonStyle, moveHidden]}
+                  onClick={() => post(widgets.list)}
+                >
+                  저장하기
+                </button>
+              </div>
+            )}
             <button
               type='button'
               css={[hiddenButton]}
               onClick={() => {
                 if (statAnimationEnd === 0) {
-                  setStatAnimationStart(0);
-                  setStatAnimationEnd(400);
+                  buttonMoveAnimation();
                 } else {
-                  setStatAnimationStart(400);
-                  setStatAnimationEnd(0);
+                  buttonMoveAnimation();
                 }
               }}
             >
@@ -167,16 +190,16 @@ const commonButtonStyle = css`
 const hiddenButton = css`
   height: 34px;
   width: 34px;
-  background-color: #c9c9c9;
   border-radius: 50%;
   border: none;
   padding: 0px;
-  &:hover {
-    background-color: #707070;
-  }
+  overflow: hidden;
 `;
 
 const toggle = css`
-  height: 34px;
+  height: 68px;
   width: 34px;
+  &:hover {
+    margin-top: -34px;
+  }
 `;

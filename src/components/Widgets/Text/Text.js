@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './TextEditor.css';
+import './Text.css';
 
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import InlineEditor from '@ckeditor/ckeditor5-build-inline';

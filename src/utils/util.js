@@ -127,7 +127,7 @@ export function logout() {
   window.location.assign('/main');
 }
 
-export function isTmpWidget(type) {
+export function isNewWidget(type) {
   if (type === TYPE_NEW) {
     return true;
   }

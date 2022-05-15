@@ -13,6 +13,7 @@ import {
   TYPE_IMAGE,
   TYPE_NEW,
 } from '../utils/constantValue';
+import { newWidgetHeight, newWidgetWidth } from '../styles/style';
 
 // init new widget
 export function useInitWidget() {
@@ -174,6 +175,7 @@ export function usePostImage() {
   };
 }
 
+// 빈 위젯 위치 업데이트
 export function useAddEmptyWidget() {
   const { widgets } = useSelector((state) => ({
     widgets: state.info.widgets,
@@ -189,29 +191,15 @@ export function useAddEmptyWidget() {
       i: `${widgets.count + 1}`,
       x: mouseOverWidget[0].x,
       y: mouseOverWidget[0].y,
-      w: 1,
-      h: 1,
+      w: newWidgetWidth,
+      h: newWidgetHeight,
     };
-    updateWidgets([...widgets.list, newWidget]);
+    const converted = widgets.list.filter(
+      (element) => element.widget_type !== TYPE_NEW
+    );
+    updateWidgets([...converted, newWidget]);
   };
   return {
     addEmptyWidget,
-  };
-}
-export function useRemoveEmptyWidget() {
-  const { widgets } = useSelector((state) => ({
-    widgets: state.info.widgets,
-  }));
-  const { updateWidgets } = useUpdateWidgetsData();
-
-  const removeEmptyWidget = () => {
-    const converted = widgets.list.filter(function (element) {
-      return element.widget_type !== TYPE_NEW;
-    });
-    updateWidgets(converted);
-  };
-
-  return {
-    removeEmptyWidget,
   };
 }

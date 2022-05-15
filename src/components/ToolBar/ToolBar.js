@@ -16,18 +16,6 @@ function ToolBar() {
     { type: 'image', label: '그림', emoji: img },
     { type: 'video', label: '비디오', emoji: video },
     { type: 'text', label: '텍스트', emoji: text },
-    // {
-    //   type: 'calendar',
-    //   label: '달력',
-    //   emoji: calendar,
-    // },
-    // {
-    //   type: 'todo',
-    //   label: '투두',
-    //   emoji: todolist,
-    // },
-    // { type: 'clock', label: '시계', emoji: clock },
-    // { type: 'visit', label: '방명록', emoji: pin },
   ];
 
   const new_widget_button_list = widgetList.map((value, i) => ({

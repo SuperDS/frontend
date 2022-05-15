@@ -141,7 +141,8 @@ export const InitButtonStyle = css`
 `;
 
 export const RoundButtonSmall = css`
-  padding: 1.5vh 4vw;
+  height: 40px;
+  padding: 0.8rem 3.5rem;
   border-radius: 30px;
 `;
 
@@ -151,8 +152,11 @@ export const WhiteColorButton = css`
 `;
 
 export const OrangeColorButton = css`
-  background-color: ${COLOR_STYLE.orange};
+  background-color: ${BUTTON_COLOR.orangeSecond};
   color: ${COLOR_STYLE.white};
+  &:hover {
+    background-color: ${BUTTON_COLOR.orange};
+  }
 `;
 // media query
 

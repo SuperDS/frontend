@@ -19,6 +19,9 @@ const slice = createSlice({
       count: 0,
       list: [],
     },
+    newWidget: {
+      list: [],
+    },
   },
   reducers: {
     replacementUser(state, action) {
@@ -26,6 +29,9 @@ const slice = createSlice({
     },
     replacementWidgets(state, action) {
       state.widgets = action.payload;
+    },
+    replacementNewWidgets(state, action) {
+      state.newWidget = action.payload;
     },
     replacementModal(state, action) {
       state.modal = action.payload;
@@ -37,6 +43,7 @@ export const infoReducer = slice.reducer;
 
 export const {
   replacementWidgets: createReplacementWidgetsAction,
+  replacementNewWidgets: createReplacementNewWidgetsAction,
   replacementModal: createReplacementModalAction,
   replacementUser: createReplacementUserAction,
 } = slice.actions;

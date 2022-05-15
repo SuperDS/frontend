@@ -193,7 +193,6 @@ const PopupHeader = css`
 `;
 
 const PopupLabel = css`
-  font-family: NotoSansCJKKR;
   font-size: 1.3rem;
   font-weight: 800;
 `;
