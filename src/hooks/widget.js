@@ -13,6 +13,7 @@ import {
   TYPE_IMAGE,
   TYPE_NEW,
 } from '../utils/constantValue';
+import { newWidgetHeight, newWidgetWidth } from '../styles/style';
 
 // init new widget
 export function useInitWidget() {
@@ -190,8 +191,8 @@ export function useAddEmptyWidget() {
       i: `${widgets.count + 1}`,
       x: mouseOverWidget[0].x,
       y: mouseOverWidget[0].y,
-      w: 1,
-      h: 1,
+      w: newWidgetWidth,
+      h: newWidgetHeight,
     };
     const converted = widgets.list.filter(
       (element) => element.widget_type !== TYPE_NEW

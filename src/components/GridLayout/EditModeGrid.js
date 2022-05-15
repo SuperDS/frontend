@@ -8,7 +8,13 @@ import GridLayout from './GridLayout';
 import MouseGridLayout from './MouseGridLayout';
 import { createReplacementWidgetsAction } from '../../redux/slice';
 import { WidgetElement } from '../Widgets/WidgetElement';
-import { WIDGET_COMMON_RADIUS } from '../../styles/style';
+import {
+  GRID_COLS,
+  GRID_MARGIN,
+  newWidgetHeight,
+  newWidgetWidth,
+  WIDGET_COMMON_RADIUS,
+} from '../../styles/style';
 import {
   ACTION_NONE,
   ACTION_EDIT,
@@ -19,10 +25,10 @@ import useWindowSize from './useWindowSize';
 import ToolBar from '../ToolBar/ToolBar';
 import { useAddEmptyWidget } from '../../hooks/widget';
 
-const widgetDefaultValue = {
+const mouseOverWidgetDefaultValue = {
   i: '0',
-  w: 1,
-  h: 1,
+  w: newWidgetWidth,
+  h: newWidgetHeight,
   x: 0,
   y: 0,
   widget_type: TYPE_NONEDISPLAY,
@@ -42,7 +48,9 @@ function EditModeGrid() {
   }, [windowWidth]);
   // mouseOver위젯(빈 공간 클릭 시 나오는 위젯)과 보통의 위젯이 겹치는 지 판단해주는 state
   const [isWidgetOverlap, setIsWidgetOverlap] = useState(false);
-  const [mouseOverWidget, setMouseOverWidget] = useState([widgetDefaultValue]);
+  const [mouseOverWidget, setMouseOverWidget] = useState([
+    mouseOverWidgetDefaultValue,
+  ]);
   // toolBar 선택위한 위젯
   const [selectedWidget, setSelectedWidget] = useState(null);
   const [gridHeight, setGridHeight] = useState(1);
@@ -133,7 +141,12 @@ function EditModeGrid() {
   // usecallback으로 감싸면 왜인지 값이 틀리게 나옴 -> 이유는 나중에 꼭 알아볼 것
   const mouseWidgetPosition = (e) => {
     if (isWidgetOverlap === false && e.clientX > 5) {
-      const newData = { w: 1, h: 1, i: '0', widget_type: TYPE_MOUSE };
+      const newData = {
+        w: newWidgetWidth,
+        h: newWidgetHeight,
+        i: '0',
+        widget_type: TYPE_MOUSE,
+      };
       newData.x = Math.floor(((e.pageX - 5) * 16) / (minWindowWidth - 10));
       newData.y = Math.floor((e.pageY * 16) / (minWindowWidth - 10));
       setMouseOverWidget([
@@ -143,28 +156,27 @@ function EditModeGrid() {
         },
       ]);
     } else {
-      setMouseOverWidget([widgetDefaultValue]);
+      setMouseOverWidget([mouseOverWidgetDefaultValue]);
     }
     updateFloatingUi();
   };
 
   // about grid style
-  const margin = 10;
-  const cols = 16;
   const gridStyle = useMemo(
     () => ({
       position: 'relative',
       top: '-5px',
-      margin: '10',
       minWidth: '1124px',
       minHeight: `calc(150vh + ${gridHeight}px)`,
       width: '100%',
-      backgroundSize: `calc((${minWindowWidth}px - ${margin}px) / ${cols}) calc((${minWindowWidth}px - ${margin}px) / ${cols})`,
-      backgroundPosition: `${margin / 2 - 1}px ${margin / 2 - 1}px`,
+      backgroundSize: `calc((${minWindowWidth}px - ${GRID_MARGIN[0]}px) / ${GRID_COLS}) calc((${minWindowWidth}px - ${GRID_MARGIN[0]}px) / ${GRID_COLS})`,
+      backgroundPosition: `${GRID_MARGIN[0] / 2 - 1}px ${
+        GRID_MARGIN[0] / 2 - 1
+      }px`,
       backgroundImage: `linear-gradient(to right, #eee 2px, transparent 2px),
   linear-gradient(to bottom, #eee 2px, transparent 2px)`,
     }),
-    [minWindowWidth, margin, cols, gridHeight]
+    [minWindowWidth, gridHeight]
   );
   // grid공식 가로 calc((100% - ${margin}px) / ${cols}) calc((100% - ${margin}px - X좌표 스크롤바픽셀) / ${cols})
 
@@ -184,7 +196,7 @@ function EditModeGrid() {
   );
 
   const initMouseOverWidget = useCallback(() => {
-    setMouseOverWidget([widgetDefaultValue]);
+    setMouseOverWidget([mouseOverWidgetDefaultValue]);
   }, [setMouseOverWidget]);
 
   const gridLayoutItems = useMemo(() => {
