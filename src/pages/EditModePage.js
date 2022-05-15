@@ -24,9 +24,10 @@ function EditMode() {
   const history = useHistory();
   const { myInfo } = useMyInfo();
   const { post } = usePostData();
-  const [statAnimationStart, setStatAnimationStart] = useState(0);
+  const [statAnimationStart, setStatAnimationStart] = useState(400);
   const [statAnimationEnd, setStatAnimationEnd] = useState(0);
   const [isAnimationEnd, setIsAnimationEnd] = useState(false);
+  const [timeoutId, setTimeoutId] = useState(0);
   useEffect(() => {
     if (pageUrl && myInfo) {
       if (myInfo && urlMatched(myInfo.url, pageUrl)) {
@@ -79,12 +80,25 @@ function EditMode() {
     animation-fill-mode: forwards;
   `;
 
-  const removeButtonAfterAnimation = () => {
-    if (isAnimationEnd === false)
-      setTimeout(() => {
-        setIsAnimationEnd(true);
-      }, 1000);
-    else setIsAnimationEnd(false);
+  // 애니메이션 끝난 후 div 없애는 함수, 다시 만듦
+  const buttonMoveAnimation = () => {
+    if (statAnimationStart === 400 && isAnimationEnd === false) {
+      setTimeoutId(
+        setTimeout(() => {
+          setIsAnimationEnd(true);
+        }, 1000)
+      );
+      setStatAnimationStart(0);
+      setStatAnimationEnd(400);
+    } else if (statAnimationStart === 0 && isAnimationEnd === true) {
+      setIsAnimationEnd(false);
+      setStatAnimationStart(400);
+      setStatAnimationEnd(0);
+    } else if (statAnimationStart === 0 && isAnimationEnd === false) {
+      clearTimeout(timeoutId);
+      setStatAnimationStart(400);
+      setStatAnimationEnd(0);
+    }
   };
   return (
     <PageWrapper>
@@ -116,13 +130,9 @@ function EditMode() {
               css={[hiddenButton]}
               onClick={() => {
                 if (statAnimationEnd === 0) {
-                  setStatAnimationStart(0);
-                  setStatAnimationEnd(400);
-                  removeButtonAfterAnimation();
+                  buttonMoveAnimation();
                 } else {
-                  removeButtonAfterAnimation();
-                  setStatAnimationStart(400);
-                  setStatAnimationEnd(0);
+                  buttonMoveAnimation();
                 }
               }}
             >
