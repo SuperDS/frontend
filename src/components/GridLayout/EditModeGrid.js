@@ -81,7 +81,7 @@ function EditModeGrid() {
   }, []);
 
   const handleScrollWidth = () => {
-    if (window.scrollY > 100) {
+    if (window.scrollY > 100 && window.scrollY < 10000) {
       setGridHeight(window.scrollY);
     }
   };
@@ -126,19 +126,51 @@ function EditModeGrid() {
     [widgets]
   );
 
+  // about grid style
+  const gridStyle = useMemo(
+    () => ({
+      position: 'relative',
+      top: '-5px',
+      minWidth: '1124px',
+      minHeight: `calc(150vh + ${gridHeight}px)`,
+      width: '100%',
+    }),
+    [gridHeight]
+  );
+  const mouseOverGridStyle = useMemo(
+    () => ({
+      position: 'absolute',
+      top: '-5px',
+      left: '0px',
+      width: '100%',
+      minWidth: '1124px',
+      minHeight: `100%`,
+      zIndex: '-100',
+      backgroundSize: `calc((${minWindowWidth}px - ${GRID_MARGIN[0]}px) / ${GRID_COLS}) calc((${minWindowWidth}px - ${GRID_MARGIN[0]}px) / ${GRID_COLS})`,
+      backgroundPosition: `${GRID_MARGIN[0] / 2 - 1}px ${
+        GRID_MARGIN[0] / 2 - 1
+      }px`,
+      backgroundImage: `linear-gradient(to right, #eee 2px, transparent 2px),
+  linear-gradient(to bottom, #eee 2px, transparent 2px)`,
+    }),
+    [minWindowWidth, GRID_MARGIN, GRID_COLS]
+  );
+  // grid공식 가로 calc((100% - ${margin}px) / ${cols}) calc((100% - ${margin}px - X좌표 스크롤바픽셀) / ${cols})
+
   // 마우스오버 위젯 그리드(기존 그리드와 레이어 되어 있음)
   const mouseOverWidgetGridForm = useMemo(() => {
     return (
       <MouseGridLayout style={mouseOverGridStyle} mylayout={mouseOverWidget}>
-        <div key='0'>
-          <WidgetElement element={mouseOverWidget[0]} mode='normal' />
-        </div>
+        {mouseOverWidget[0].widget_type === TYPE_MOUSE && (
+          <div key='0'>
+            <WidgetElement element={mouseOverWidget[0]} mode='normal' />
+          </div>
+        )}
       </MouseGridLayout>
     );
-  }, [mouseOverWidget]);
+  }, [mouseOverWidget, mouseOverGridStyle]);
 
   // 마우스 위치를 계산하기 위한 함수
-  // usecallback으로 감싸면 왜인지 값이 틀리게 나옴 -> 이유는 나중에 꼭 알아볼 것
   const mouseWidgetPosition = (e) => {
     if (isWidgetOverlap === false && e.clientX > 5) {
       const newData = {
@@ -146,9 +178,9 @@ function EditModeGrid() {
         h: newWidgetHeight,
         i: '0',
         widget_type: TYPE_MOUSE,
+        x: Math.floor(((e.pageX - 5) * 16) / (minWindowWidth - 10)),
+        y: Math.floor((e.pageY * 16) / (minWindowWidth - 10)),
       };
-      newData.x = Math.floor(((e.pageX - 5) * 16) / (minWindowWidth - 10));
-      newData.y = Math.floor((e.pageY * 16) / (minWindowWidth - 10));
       setMouseOverWidget([
         {
           ...newData,
@@ -160,26 +192,6 @@ function EditModeGrid() {
     }
     updateFloatingUi();
   };
-
-  // about grid style
-  const gridStyle = useMemo(
-    () => ({
-      position: 'relative',
-      top: '-5px',
-      minWidth: '1124px',
-      minHeight: `calc(150vh + ${gridHeight}px)`,
-      width: '100%',
-      backgroundSize: `calc((${minWindowWidth}px - ${GRID_MARGIN[0]}px) / ${GRID_COLS}) calc((${minWindowWidth}px - ${GRID_MARGIN[0]}px) / ${GRID_COLS})`,
-      backgroundPosition: `${GRID_MARGIN[0] / 2 - 1}px ${
-        GRID_MARGIN[0] / 2 - 1
-      }px`,
-      backgroundImage: `linear-gradient(to right, #eee 2px, transparent 2px),
-  linear-gradient(to bottom, #eee 2px, transparent 2px)`,
-    }),
-    [minWindowWidth, gridHeight]
-  );
-  // grid공식 가로 calc((100% - ${margin}px) / ${cols}) calc((100% - ${margin}px - X좌표 스크롤바픽셀) / ${cols})
-
   const setOverlapTrue = useCallback(() => {
     setIsWidgetOverlap(true);
   }, [setIsWidgetOverlap]);
@@ -307,14 +319,3 @@ const removeBtnStyle = css`
   width: 100%;
   height: 100%;
 `;
-
-const mouseOverGridStyle = {
-  position: 'absolute',
-  top: '-5px',
-  left: '0px',
-  margin: '10',
-  width: '100%',
-  minWidth: '1124px',
-  minHeight: `100vh`,
-  zIndex: '-100',
-};

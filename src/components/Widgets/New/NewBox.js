@@ -2,12 +2,12 @@
 import React from 'react';
 import { css } from '@emotion/react';
 import { WIDGET_COMMON_RADIUS } from '../../../styles/style';
-import { newWidgetNotice } from '../../../asset/index';
+import { logoImg } from '../../../asset/index';
 
 function NewBox() {
   return (
     <div css={newWidget}>
-      <img css={newWidgetNoticeStyle} src={newWidgetNotice} />
+      <img css={newWidgetNoticeStyle} src={logoImg} />
     </div>
   );
 }
