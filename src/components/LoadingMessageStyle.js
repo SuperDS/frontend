@@ -10,7 +10,6 @@ export const style = css`
   margin-top: 35px;
   font-size: 14px;
   font-weight: bold;
-  font-family: NotoSansCJKKR;
 `;
 
 export default LoadingMessageStyle;

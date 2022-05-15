@@ -141,7 +141,8 @@ export const InitButtonStyle = css`
 `;
 
 export const RoundButtonSmall = css`
-  padding: 1.5vh 4vw;
+  height: 40px;
+  padding: 0.8rem 3.5rem;
   border-radius: 30px;
 `;
 
