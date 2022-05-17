@@ -245,5 +245,7 @@ export const BasicInputStyle = css`
   display: block;
   border-radius: 30px;
   border: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
   background-color: ${COLOR_STYLE.veryLightPink};
 `;

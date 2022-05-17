@@ -1,14 +1,6 @@
 /** @jsxImportSource @emotion/react */
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { css } from '@emotion/react';
-
-import { useDispatch, useSelector } from 'react-redux';
-import { createReplacementWidgetsAction } from '../../../redux/slice';
-import {
-  ACTION_EDIT,
-  ACTION_NONE,
-  TYPE_VIDEO,
-} from '../../../utils/constantValue';
 
 import {
   BasicInputStyle,
@@ -22,35 +14,16 @@ import {
   SHADOW_STYLE,
 } from '../../../styles/GlobalStyles';
 import { closeSet } from '../../../asset';
+import { useInitWidget } from '../../../hooks/widget';
+import { TYPE_VIDEO } from '../../../utils/constantValue';
 
-function PopVideo(props) {
-  const { widgets, modal } = useSelector((state) => ({
-    widgets: state.info.widgets,
-    modal: state.info.modal,
-  }));
+function PopVideo({ label, endPop }) {
+  const { init } = useInitWidget();
 
-  const { label, endPop } = props;
   const [url, setUrl] = useState('');
-  const dispatch = useDispatch();
 
   function editWidget() {
-    const allWidgets = JSON.parse(JSON.stringify(widgets.list));
-    const targetId = modal.imgChangeTargetId;
-    const targetItem = allWidgets.find((widget) => widget.i === targetId);
-    targetItem.widget_type = TYPE_VIDEO;
-    targetItem.widget_data = { thumbnail: `${url}` };
-    if (
-      targetItem.widget_action === ACTION_NONE ||
-      targetItem.widget_code !== ''
-    ) {
-      targetItem.widget_action = ACTION_EDIT;
-    }
-    dispatch(
-      createReplacementWidgetsAction({
-        ...widgets,
-        list: allWidgets,
-      })
-    );
+    init({ type: TYPE_VIDEO, data: { url } });
   }
 
   const handleSubmit = () => {
