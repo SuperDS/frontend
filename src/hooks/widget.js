@@ -12,16 +12,17 @@ import {
   ACTION_NONE,
   TYPE_IMAGE,
   TYPE_NEW,
+  TYPE_VIDEO,
 } from '../utils/constantValue';
 import { newWidgetHeight, newWidgetWidth } from '../styles/style';
 
 // init new widget
 export function useInitWidget() {
+  const dispatch = useDispatch();
   const { widgets, modal } = useSelector((state) => ({
     widgets: state.info.widgets,
     modal: state.info.modal,
   }));
-  const dispatch = useDispatch();
 
   const initImageWidget = ({ thumbnail, url }) => {
     const changed = JSON.parse(JSON.stringify(widgets.list));
@@ -38,6 +39,22 @@ export function useInitWidget() {
     ) {
       targetItem.widget_action = ACTION_EDIT;
     }
+    console.log(changed);
+    updateRedux(changed);
+  };
+
+  const initVideoWidget = ({ url }) => {
+    const changed = JSON.parse(JSON.stringify(widgets.list));
+    const targetId = modal.imgChangeTargetId;
+    const targetItem = changed.find((widget) => widget.i === targetId);
+    targetItem.widget_type = TYPE_VIDEO;
+    targetItem.widget_data = { thumbnail: `${url}` };
+    if (
+      targetItem.widget_action === ACTION_NONE ||
+      targetItem.widget_code !== ''
+    ) {
+      targetItem.widget_action = ACTION_EDIT;
+    }
     updateRedux(changed);
   };
 
@@ -45,7 +62,7 @@ export function useInitWidget() {
     if (changed) {
       dispatch(
         createReplacementWidgetsAction({
-          ...widgets,
+          count: widgets.count + 1,
           list: changed,
         })
       );
@@ -56,6 +73,8 @@ export function useInitWidget() {
     if (data) {
       if (type === TYPE_IMAGE) {
         initImageWidget(data);
+      } else if (type === TYPE_VIDEO) {
+        initVideoWidget(data);
       }
     }
   };
@@ -66,13 +85,21 @@ export function useInitWidget() {
 export function useUpdateWidgetsData() {
   const dispatch = useDispatch();
 
-  const updateWidgets = (newData) => {
-    dispatch(
-      createReplacementWidgetsAction({
-        count: newData.length,
-        list: newData,
-      })
-    );
+  const updateWidgets = (newData, type) => {
+    if (type === TYPE_NEW)
+      dispatch(
+        createReplacementWidgetsAction({
+          count: newData.length - 1,
+          list: newData,
+        })
+      );
+    else
+      dispatch(
+        createReplacementWidgetsAction({
+          count: newData.length,
+          list: newData,
+        })
+      );
   };
   return { updateWidgets };
 }
@@ -188,7 +215,7 @@ export function useAddEmptyWidget() {
       widget_code: '',
       widget_type: TYPE_NEW,
       widget_data: {},
-      i: `${widgets.count + 1}`,
+      i: `${widgets.count}`,
       x: mouseOverWidget[0].x,
       y: mouseOverWidget[0].y,
       w: newWidgetWidth,
@@ -197,7 +224,9 @@ export function useAddEmptyWidget() {
     const converted = widgets.list.filter(
       (element) => element.widget_type !== TYPE_NEW
     );
-    updateWidgets([...converted, newWidget]);
+    console.log(widgets);
+    console.log(newWidget);
+    updateWidgets([...converted, newWidget], TYPE_NEW);
   };
   return {
     addEmptyWidget,
