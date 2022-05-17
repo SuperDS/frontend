@@ -191,6 +191,8 @@ const PopUpBody = css`
 const urlInputStyle = css`
   ${BasicInputStyle}
   width: 80%;
+  overflow: hidden;
+  text-overflow: ellipsis;
   height: 40px;
   margin: 28px 15px 32px 0;
   padding: 8px 17px;
