@@ -39,7 +39,6 @@ export function useInitWidget() {
     ) {
       targetItem.widget_action = ACTION_EDIT;
     }
-    console.log(changed);
     updateRedux(changed);
   };
 
@@ -224,8 +223,6 @@ export function useAddEmptyWidget() {
     const converted = widgets.list.filter(
       (element) => element.widget_type !== TYPE_NEW
     );
-    console.log(widgets);
-    console.log(newWidget);
     updateWidgets([...converted, newWidget], TYPE_NEW);
   };
   return {
