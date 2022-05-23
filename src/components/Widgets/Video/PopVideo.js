@@ -23,7 +23,7 @@ function PopVideo({ label, endPop }) {
   const [url, setUrl] = useState('');
 
   function editWidget() {
-    init({ type: TYPE_VIDEO, data: { url } });
+    init({ type: TYPE_VIDEO, data: { thumbnail: url } });
   }
 
   const handleSubmit = () => {

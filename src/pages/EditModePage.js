@@ -28,6 +28,7 @@ function EditMode() {
   const [statAnimationEnd, setStatAnimationEnd] = useState(0);
   const [isAnimationEnd, setIsAnimationEnd] = useState(false);
   const [timeoutId, setTimeoutId] = useState(0);
+
   useEffect(() => {
     if (pageUrl && myInfo) {
       if (myInfo && urlMatched(myInfo.url, pageUrl)) {

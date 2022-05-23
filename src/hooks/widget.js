@@ -10,9 +10,7 @@ import {
   ACTION_CREATE,
   ACTION_EDIT,
   ACTION_NONE,
-  TYPE_IMAGE,
   TYPE_NEW,
-  TYPE_VIDEO,
 } from '../utils/constantValue';
 import { newWidgetHeight, newWidgetWidth } from '../styles/style';
 
@@ -24,30 +22,13 @@ export function useInitWidget() {
     modal: state.info.modal,
   }));
 
-  const initImageWidget = ({ thumbnail, url }) => {
+  const initWidget = (_type, _data) => {
     const changed = JSON.parse(JSON.stringify(widgets.list));
     const targetId = modal.imgChangeTargetId;
     const targetItem = changed.find((widget) => widget.i === targetId);
-    targetItem.widget_type = TYPE_IMAGE;
-    targetItem.widget_data = {
-      thumbnail: `${thumbnail}`,
-      url: `${url}`,
-    };
-    if (
-      targetItem.widget_action === ACTION_NONE ||
-      targetItem.widget_code !== ''
-    ) {
-      targetItem.widget_action = ACTION_EDIT;
-    }
-    updateRedux(changed);
-  };
 
-  const initVideoWidget = ({ url }) => {
-    const changed = JSON.parse(JSON.stringify(widgets.list));
-    const targetId = modal.imgChangeTargetId;
-    const targetItem = changed.find((widget) => widget.i === targetId);
-    targetItem.widget_type = TYPE_VIDEO;
-    targetItem.widget_data = { thumbnail: `${url}` };
+    targetItem.widget_type = _type;
+    targetItem.widget_data = _data;
     if (
       targetItem.widget_action === ACTION_NONE ||
       targetItem.widget_code !== ''
@@ -69,12 +50,8 @@ export function useInitWidget() {
   };
 
   const init = ({ type, data }) => {
-    if (data) {
-      if (type === TYPE_IMAGE) {
-        initImageWidget(data);
-      } else if (type === TYPE_VIDEO) {
-        initVideoWidget(data);
-      }
+    if (type && data) {
+      initWidget(type, data);
     }
   };
   return { init };
