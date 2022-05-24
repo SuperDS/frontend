@@ -41,8 +41,13 @@ table {
 input:focus {
   outline: none;
 }
-input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0 1000px white inset;
+
+/* input 자동 선택시 input 색이 바뀌는 것을 강제로 shadow로 색을 덮어씌워주는 것 */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px #f2f2f2 inset;
 }
 a {
   color: inherit;
