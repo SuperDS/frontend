@@ -46,10 +46,10 @@ const widgetBoxPopStyle = {
   top: `50%`,
   left: `50%`,
   transform: 'translate(-50%, -50%)',
-  backgroundColor: 'white',
-  borderRadius: '20px',
   width: '540px',
   height: `250px`,
+  backgroundColor: 'white',
+  borderRadius: '20px',
 };
 
 export default PopWidgets;

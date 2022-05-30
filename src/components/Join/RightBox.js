@@ -35,11 +35,9 @@ function RightBox() {
   const fieldList = getFieldList();
 
   const { endpoint, joinType, userEmail } = location.state;
-
   const certificateEmail = () => {
     setCertModal(true);
   };
-
   const emailCertButton = useMemo(() => {
     if (certState) {
       return (
