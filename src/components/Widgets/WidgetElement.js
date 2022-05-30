@@ -45,7 +45,7 @@ export function WidgetElement({
       createReplacementModalAction({
         ...modal,
         imgInputWindow: true,
-        imgChangeTargetId: id,
+        targetWidgetId: id,
       })
     );
   };
@@ -64,7 +64,7 @@ export function WidgetElement({
     dispatch(
       createReplacementModalAction({
         ...modal,
-        imgChangeTargetId: id,
+        targetWidgetId: id,
         popUpWindow: true,
         popUpWindowType: stringType,
       })

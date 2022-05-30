@@ -14,7 +14,7 @@ import {
 } from '../utils/constantValue';
 import { newWidgetHeight, newWidgetWidth } from '../styles/style';
 
-// init new widget
+// Type이 정해진 위젯을 수정/추가
 export function useInitWidget() {
   const dispatch = useDispatch();
   const { widgets, modal } = useSelector((state) => ({
@@ -24,7 +24,7 @@ export function useInitWidget() {
 
   const initWidget = (_type, _data) => {
     const changed = JSON.parse(JSON.stringify(widgets.list));
-    const targetId = modal.imgChangeTargetId;
+    const targetId = modal.targetWidgetId;
     const targetItem = changed.find((widget) => widget.i === targetId);
 
     targetItem.widget_type = _type;

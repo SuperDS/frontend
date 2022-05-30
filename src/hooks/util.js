@@ -14,3 +14,8 @@ export function useGetEmail() {
   const { email } = useParams();
   return email;
 }
+
+export function useGetUserUrl() {
+  const { pageUrl } = useParams();
+  return pageUrl;
+}
