@@ -5,6 +5,7 @@ import MainPage from './MainPage';
 import FeedbackPage from './FeedbackPage';
 import JoinPage from './JoinPage';
 import EmailCertPage from './EmailCertPage';
+import MyPage from './MyPage';
 
 export {
   JoinPage,
@@ -14,4 +15,5 @@ export {
   MainPage,
   FeedbackPage,
   EmailCertPage,
+  MyPage,
 };

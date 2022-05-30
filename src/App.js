@@ -10,6 +10,7 @@ import {
   EditModePage,
   NormalModePage,
   EmailCertPage,
+  MyPage,
 } from './pages';
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <Route exact path='/feedback' component={FeedbackPage} />
         <Route exact path='/callback/kakao' component={HandleKakaoLogin} />
         <Route exact path='/:id/' component={NormalModePage} />
+        <Route exact path='/:id/mypage' component={MyPage} />
         <Route exact path='/:id/edit' component={EditModePage} />
         <Route
           exact
