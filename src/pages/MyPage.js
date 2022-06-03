@@ -81,12 +81,154 @@ function MyPage() {
         pageType='normal'
       />
       <div css={MyPageWrapper}>
+        <div
+          css={css`
+            height: 50px;
+          `}
+        />
         <div css={MyPageAZone}>
-          <div css={ProfileAZone}> profile</div>
-          <br /> 이동섭
-          <br /> Today 122 Following 64 Follower 1982
-          <br />
-          일러스트레이션 포토그래피 현대미술
+          <div
+            css={css`
+              display: flex;
+              height: 100%;
+              align-items: center;
+              border: 1px solid lightgray;
+            `}
+          >
+            <div
+              css={css`
+                display: flex;
+                margin: 5px;
+                border: 1px solid lightgray;
+              `}
+            >
+              <div css={ProfileAZone}> profile</div>
+            </div>
+            <div
+              css={css`
+                width: 100%;
+                margin: 5px;
+                border: 1px solid lightgray;
+              `}
+            >
+              <div
+                css={css`
+                  width: 40%;
+                  height: 30px;
+                  margin: 5px;
+                  border: 1px solid lightgray;
+                  text-align: left;
+                  font-size: 30px;
+                `}
+              >
+                이동섭
+              </div>
+              <div
+                css={css`
+                  width: 40%;
+                  margin: 5px;
+                  border: 1px solid lightgray;
+                  text-align: left;
+                `}
+              >
+                Today 122 Following 64 Follower 1982
+              </div>
+              <div
+                css={css`
+                  width: 40%;
+                  margin: 5px;
+                  border: 1px solid lightgray;
+                  text-align: left;
+                `}
+              >
+                <div
+                  css={css`
+                    display: inline-block;
+                    margin: 5px;
+                    background-color: white;
+                    border-radius: 20px;
+                    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.15);
+                    justify-content: center;
+                    text-align: center;
+                    font-size: 13px;
+                    padding: 10px 20px 10px 20px;
+                  `}
+                >
+                  일러스트레이션
+                </div>
+                <div
+                  css={css`
+                    display: inline-block;
+                    margin: 5px;
+                    background-color: white;
+                    border-radius: 20px;
+                    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.15);
+                    justify-content: center;
+                    text-align: center;
+                    font-size: 13px;
+                    padding: 10px 20px 10px 20px;
+                  `}
+                >
+                  포토그래퍼
+                </div>
+                <div
+                  css={css`
+                    display: inline-block;
+                    margin: 5px;
+                    background-color: white;
+                    border-radius: 20px;
+                    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.15);
+                    justify-content: center;
+                    text-align: center;
+                    font-size: 13px;
+                    padding: 10px 20px 10px 20px;
+                  `}
+                >
+                  현대미술
+                </div>
+              </div>
+            </div>
+            <div
+              css={css`
+                display: flex;
+                margin: 5px;
+                border: 1px solid lightgray;
+                justify-content: center;
+                text-align: center;
+              `}
+            >
+              <div
+                css={css`
+                  display: flex;
+                  margin: 5px;
+                  background-color: #f5f5f5;
+                  border-radius: 20px;
+                  width: 150px;
+                  height: 45px;
+                  justify-content: center;
+                  line-height: 45px;
+                  text-align: center;
+                `}
+              >
+                팔로우
+              </div>
+              <div
+                css={css`
+                  display: flex;
+                  margin: 5px;
+                  width: 150px;
+                  height: 45px;
+                  justify-content: center;
+                  text-align: center;
+                  background-color: #f5f5f5;
+                  line-height: 45px;
+                  border-radius: 20px;
+                `}
+              >
+                메시지
+              </div>
+            </div>
+          </div>
         </div>
         <div css={MyPageBZone}>
           b zone
@@ -118,7 +260,7 @@ const MyPageWrapper = css`
 const MyPageAZone = css`
   width: 1470px;
   height: 320px;
-  background-color: lightsalmon;
+  background-color: white;
   display: inline-block;
 `;
 
