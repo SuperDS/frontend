@@ -2,7 +2,7 @@
 import { css } from '@emotion/react';
 import { useEffect, useState } from 'react';
 import { useMyInfo } from '../../hooks/myInfo';
-import { useRequestAuth } from '../../hooks/useRequestAuth';
+import useRequestAuth from '../../hooks/useRequestAuth';
 import { mainColor, subColor } from '../../styles/color';
 import { getApiEndpoint } from '../../utils/util';
 
@@ -27,8 +27,13 @@ function FeedbackInputBox() {
 
   function sendQnA() {
     if (loggedIn) {
-      request();
-      alert('피드백이 전송되었습니다.');
+      if (inputmessage.length < 10) alert('10자 이상 작성해주셔야 합니다!');
+      else {
+        request();
+        alert(
+          '온잇 팀이 의견을 검토하기까지는 피드백 화면에서 나의 의견을 확인할 수 없어요. 소중한 의견을 신속하게 확인할게요!'
+        );
+      }
     } else {
       sendAlert();
     }
@@ -51,11 +56,11 @@ function FeedbackInputBox() {
   };
 
   return (
-    <div css={[background]}>
+    <div css={[container]}>
       <input
         css={[removeInputCss, inputBox]}
         value={inputmessage}
-        placeholder='이런 점이 개선되었으면 좋겠어요'
+        placeholder='온잇에 대한 생생한 의견을 보내주세요!'
         onChange={handleMessageChange}
         onKeyDown={handleKeyDown}
       />
@@ -64,26 +69,24 @@ function FeedbackInputBox() {
         css={[removeButtonCss, buttonBox]}
         onClick={sendQnA}
       >
-        남기기
+        보내기
       </button>
     </div>
   );
 }
 
-const background = css`
+const container = css`
   background-color: ${inputColor};
-  will-change: transform, opacity;
-  transition: transform 1000ms ease 0s, opacity 1000ms ease 0s;
   opacity: 1;
-  transform: translate3d(0px, 0px, 0px);
   display: flex;
-  -webkit-box-align: center;
   align-items: center;
+  -webkit-box-align: center;
   -webkit-box-pack: center;
   justify-content: center;
-  margin: 43.2px 20px;
+  margin: 43.2px 20px 24.7px;
   border-radius: 48px;
   box-sizing: border-box;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.16);
 `;
 
 const removeButtonCss = css`
@@ -117,6 +120,7 @@ const inputBox = css`
   display: block;
   width: 100%;
   height: 24px;
+  font-size: 13.55px;
   border-radius: 48px;
   background-color: ${inputColor};
   padding: 12px 20px;

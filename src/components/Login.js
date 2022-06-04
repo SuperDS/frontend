@@ -9,7 +9,7 @@ import {
   FlexColCenter,
   InitButtonStyle,
 } from '../styles/GlobalStyles';
-import { useRequestAuth } from '../hooks/useRequestAuth';
+import useRequestAuth from '../hooks/useRequestAuth';
 
 function Login() {
   const [emailValue, setEmailValue] = useState('');
@@ -93,7 +93,7 @@ function Login() {
       <h1 css={[loginH1]}>로그인</h1>
       <div css={[contentBox]}>
         <form css={[formWidth]} onSubmit={handleLocalLogin}>
-          <div css={[commonInputBoxStyle, emailInputBoxStyle]}>
+          <div css={[commonInputBoxStyle, marginBottom10px]}>
             <input
               css={[commonInputStyle]}
               type='text'
@@ -178,7 +178,7 @@ const commonInputBoxStyle = css`
   margin-bottom: 10px;
 `;
 
-const emailInputBoxStyle = css`
+const marginBottom10px = css`
   margin-bottom: 10px;
 `;
 

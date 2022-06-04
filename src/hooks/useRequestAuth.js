@@ -18,7 +18,7 @@ import {
 /**
  * @param {UseRequestAuthProps} props
  */
-export function useRequestAuth({ endpoint, method, data, contentType }) {
+function useRequestAuth({ endpoint, method, data, contentType }) {
   const [firstRes, setFirstRes] = useState(null);
   const [secondRes, setSecondRes] = useState(null);
   const [renewRes, setRenewRes] = useState(null);

@@ -9,9 +9,9 @@ import {
   SHADOW_STYLE,
 } from '../styles/GlobalStyles';
 import { isPassword, getApiEndpoint } from '../utils/util';
-import { useRequestAuth } from './useRequestAuth';
+import useRequestAuth from './useRequestAuth';
 
-export function useInput({ inputType, id, type, ...args }) {
+function useInput({ inputType, id, type, ...args }) {
   const [value, setValue] = useState('');
 
   const endpoint = `${getApiEndpoint()}/auth/validation/${inputType}/${value}`;
@@ -22,6 +22,7 @@ export function useInput({ inputType, id, type, ...args }) {
 
   const onChange = (event) => setValue(event.currentTarget.value);
 
+  // input type에 따라 에러 메세지 출력
   const state = useMemo(() => {
     if (value === '') return null;
     if (inputType === 'email') {
@@ -42,6 +43,7 @@ export function useInput({ inputType, id, type, ...args }) {
     return 'ok';
   }, [value]);
 
+  //
   useEffect(() => {
     if (state === 'ok' && args.overlapCheckRequired) {
       request();

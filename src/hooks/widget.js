@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { createReplacementWidgetsAction } from '../redux/slice';
 import { convertForRedux, convertForServer } from '../utils/convert';
 import { useMyInfo } from './myInfo';
-import { useRequestAuth } from './useRequestAuth';
+import useRequestAuth from './useRequestAuth';
 import { getApiEndpoint } from '../utils/util';
 import {
   ACTION_CREATE,
