@@ -1,9 +1,8 @@
 import axios from 'axios';
 import { useCallback, useState } from 'react';
 
-export function useRequest(props) {
+export function useRequest({ endpoint, method, headers, data }) {
   const [resultRes, setRes] = useState(null);
-  const { endpoint, method, headers, data } = props;
 
   const request = useCallback(() => {
     let axiosPromise;

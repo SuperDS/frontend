@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import PopWidgets from '../components/Widgets/Pop/PopWidgets';
 import { PageWrapper, EditModeGrid, EditWrapper } from '../components';
 import { getApiEndpoint, urlMatched } from '../utils/util';
-import { useRequestAuth } from '../hooks/useRequestAuth';
+import useRequestAuth from '../hooks/useRequestAuth';
 import { usePostData, useSaveWidgetsFromServer } from '../hooks/widget';
 import { useGetUrl } from '../hooks/util';
 import { useMyInfo } from '../hooks/myInfo';

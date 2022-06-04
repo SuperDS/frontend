@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 import React from 'react';
-import { useRequestAuth } from '../../hooks/useRequestAuth';
+import useRequestAuth from '../../hooks/useRequestAuth';
 import { getApiEndpoint } from '../../utils/util';
 
 function AddPagePopUp({ popUp, setPopUp }) {
@@ -16,6 +16,7 @@ function AddPagePopUp({ popUp, setPopUp }) {
       user_seq: '81',
     },
   });
+  // res인자 사용 후에 삭제할 것
   console.log(res);
   function onChangeForm(event) {
     event.preventDefault();

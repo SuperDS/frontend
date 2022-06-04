@@ -3,7 +3,7 @@ import { useHistory } from 'react-router';
 import LoadingMessageStyle from '../LoadingMessageStyle';
 import { getApiEndpoint, setLocalStorage } from '../../utils/util';
 import { useRequest } from '../../hooks/useRequest';
-import { useRequestAuth } from '../../hooks/useRequestAuth';
+import useRequestAuth from '../../hooks/useRequestAuth';
 
 function HandleKakaoLogin() {
   const code = new URL(window.location.href).searchParams.get('code');

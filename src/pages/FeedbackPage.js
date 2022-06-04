@@ -1,18 +1,79 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+import { useEffect, useState } from 'react';
 import FeedbackList from '../components/FeedbackBox/FeedbackList';
 import FeedbackInputBox from '../components/FeedbackBox/FeedbackInputBox';
 import MainSentence from '../components/FeedbackBox/MainSentence';
 import { Header } from '../components';
+import useRequestAuth from '../hooks/useRequestAuth';
+import { getApiEndpoint, isError, urlOwnerNotFound } from '../utils/util';
+import MyfeedbackList from '../components/FeedbackBox/MyfeedbackList';
+import { useMyInfo } from '../hooks/myInfo';
+import { useRequest } from '../hooks/useRequest';
 
 function FeedbackPage() {
+  const [myFeedbacks, setMyFeedbacks] = useState(null);
+  const [feedbacks, setFeedbacks] = useState(null);
+  const { loggedIn, myInfo } = useMyInfo();
+
+  const endpoint = `${getApiEndpoint()}/feedback`;
+  const { res: myFeedbacksRes, request: requestMyFeedbacks } = useRequestAuth({
+    endpoint: endpoint,
+    method: 'get',
+  });
+
+  const { res: feedbacksRes, request: requestFeedbacks } = useRequest({
+    endpoint: endpoint,
+    method: 'get',
+  });
+
+  useEffect(() => {
+    if (loggedIn === false) requestFeedbacks();
+    else if (loggedIn === true) requestMyFeedbacks();
+  }, [loggedIn]);
+  useEffect(() => {
+    if (feedbacksRes && feedbacksRes.data) {
+      const { code, data, message } = feedbacksRes.data;
+      if (isError(code) && urlOwnerNotFound(message)) {
+        alert('정보를 가져올 수 없습니다.');
+      } else if (isError(code)) {
+        alert('데이터 베이스 에러입니다.');
+      }
+      if (data) {
+        setFeedbacks(data.publicFeedback);
+        setMyFeedbacks(data.myFeedback);
+      }
+    }
+  }, [feedbacksRes]);
+
+  useEffect(() => {
+    if (myFeedbacksRes && myFeedbacksRes.data) {
+      const { code, data, message } = myFeedbacksRes.data;
+      if (isError(code) && urlOwnerNotFound(message)) {
+        alert('정보를 가져올 수 없습니다.');
+      } else if (isError(code)) {
+        alert('데이터 베이스 에러입니다.');
+      }
+      if (data) {
+        setFeedbacks(data.publicFeedback);
+        setMyFeedbacks(data.myFeedback);
+        console.log(data);
+      }
+    }
+  }, [myFeedbacksRes]);
+
   return (
     <div css={[pageBox, paddingBottom]}>
       <Header pageType='feedback' />
       <div css={contentsBox}>
         <MainSentence />
         <FeedbackInputBox />
-        <FeedbackList />
+        {loggedIn === true && myFeedbacks !== null && (
+          <MyfeedbackList myFeedbacks={myFeedbacks} myInfo={myInfo} />
+        )}
+        {loggedIn !== null && myFeedbacks !== null && (
+          <FeedbackList feedbacks={feedbacks} />
+        )}
       </div>
     </div>
   );

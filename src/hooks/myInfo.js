@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useRequestAuth } from './useRequestAuth';
+import useRequestAuth from './useRequestAuth';
 import { getApiEndpoint } from '../utils/util';
 import { createReplacementUserAction } from '../redux/slice';
 
