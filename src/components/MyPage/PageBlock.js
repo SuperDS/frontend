@@ -13,7 +13,7 @@ function PageBlock({ addBlock, popUp, setPopUp }) {
             css={[InitButtonStyle, siteViewBZone]}
             onClick={() => setPopUp(!popUp)}
           >
-            추가하기
+            +
           </button>
         </>
       ) : (
@@ -24,7 +24,7 @@ function PageBlock({ addBlock, popUp, setPopUp }) {
             /* 여기에 함수 넣으면 됩니다. */
           }}
         >
-          위젯 그림
+          image
         </button>
       )}
     </>
@@ -40,4 +40,7 @@ const siteViewBZone = css`
   background-color: white;
   display: inline-block;
   margin: 10px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+  font-size: 35px;
+  color: gray;
 `;
