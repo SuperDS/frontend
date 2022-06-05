@@ -2,6 +2,7 @@
 import { css } from '@emotion/react';
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
+import Slider from 'react-slick';
 import { Header } from '../components';
 import AddPagePopUp from '../components/MyPage/AddPagePopUp';
 import PageBlock from '../components/MyPage/PageBlock';
@@ -14,8 +15,17 @@ import {
   urlMatched,
   urlOwnerNotFound,
 } from '../utils/util';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 function MyPage() {
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 2,
+  };
   const { myInfo } = useMyInfo();
   const history = useHistory();
   const pageUrl = useGetUrl();
@@ -80,6 +90,7 @@ function MyPage() {
         pageUserName={nickname}
         pageType='normal'
       />
+
       <div css={MyPageWrapper}>
         <div
           css={css`
@@ -230,17 +241,32 @@ function MyPage() {
             </div>
           </div>
         </div>
-        <div css={MyPageBZone}>
-          b zone
-          <div css={[overFlowHidden]}>
-            <PageBlock addBlock setPopUp={setPopUp} popUp={popUp} />
-            <PageBlock />
-            <PageBlock />
-            <PageBlock />
+        <div css={MyPageBZoneWrapper}>
+          <div css={MyPageBZone}>
+            <Slider {...settings}>
+              <PageBlock addBlock setPopUp={setPopUp} popUp={popUp} />
+              <PageBlock />
+              <PageBlock />
+              <PageBlock />
+              <PageBlock />
+              <PageBlock />
+              <PageBlock />
+              <PageBlock />
+              <PageBlock />
+            </Slider>
+            <div css={[overFlowHidden]} />
           </div>
         </div>
-        <div css={MyPageCZone}>c zone</div>
-        <div css={MyPageDZone}>d zone</div>
+        <div
+          css={css`
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+          `}
+        >
+          <div css={MyPageCZone}>c zone</div>
+          <div css={MyPageDZone}>d zone</div>
+        </div>
       </div>
       {popUp && <AddPagePopUp setPopUp={setPopUp} popUp={popUp} />}
     </div>
@@ -269,28 +295,53 @@ const ProfileAZone = css`
   height: 100px;
   background-color: white;
   border-radius: 50%;
-  display: inline-block;
+  display: flex;
 `;
 
+const MyPageBZoneWrapper = css`
+  width: 100vw;
+  height: 360px;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  border: 1px solid lightgray;
+`;
 const MyPageBZone = css`
   width: 1470px;
-  height: 360px;
-  background-color: lightblue;
-  display: inline-block;
+  /* min-width: 1470px; */
+  /* height: 360px; */
+  background-color: white;
+  /* text-align: center; */
+  /* justify-content: center; */
+  /* align-items: center; */
+  /* display: flex; */
 `;
 
 const MyPageCZone = css`
-  width: 735px;
-  height: 1500px;
-  background-color: lightseagreen;
-  display: inline-block;
+  min-width: 700px;
+  margin: 20px 10px;
+  height: 900px;
+  background-color: white;
+  border: 1px solid lightgray;
+  border-radius: 20px 20px 20px 20px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+  align-items: center;
+  text-align: center;
+
+  display: flex;
 `;
 
 const MyPageDZone = css`
-  width: 735px;
-  height: 1500px;
-  background-color: lightyellow;
-  display: inline-block;
+  min-width: 700px;
+  margin: 20px 10px;
+  height: 900px;
+  background-color: white;
+  border-radius: 20px 20px 20px 20px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+  align-items: center;
+  text-align: center;
+
+  display: flex;
 `;
 
 const overFlowHidden = css`
