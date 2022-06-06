@@ -64,6 +64,7 @@ const greenColor = css`
 
 const FeedbackBoxCss = css`
   width: 100%;
+  height: 100%;
   padding: 14.78px 17.25px 20.328px;
   word-break: break-all;
   border-bottom-right-radius: 15px;

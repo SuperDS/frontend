@@ -1,31 +1,69 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
+import Slider from 'react-slick';
+import { feedbackPass } from '../../asset';
 import { FeedbackContentsBox, randomColor } from './FeedbackContentsBox';
 
 function MyfeedbackList({ myFeedbacks, myInfo }) {
   let prevColorIndex = null;
+  function SampleNextArrow({ onClick }) {
+    return (
+      <button
+        type='button'
+        style={{
+          position: 'absolute',
+          top: 'calc(50% - 10px)',
+          right: '5.5px',
+          zIndex: 2,
+          display: 'block',
+          width: '11px',
+          height: '20px',
+          outline: '0px',
+          border: '0px',
+        }}
+        onClick={onClick}
+        onKeyUp={() => {}}
+      >
+        <img alt='pass button' src={feedbackPass} style={{ width: '11px' }} />
+      </button>
+    );
+  }
+
+  function SamplePrevArrow() {
+    return <></>;
+  }
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
+  };
 
   return (
     <div css={[ContentBox]}>
       <p css={[nicknameBox]}>{myInfo.nickname}님의 의견</p>
       <div css={[listBox]}>
-        {myFeedbacks ? (
-          myFeedbacks.map((Feedback) => {
-            console.log(prevColorIndex);
-            prevColorIndex = randomColor(prevColorIndex);
-            return (
-              <div key={Feedback.feedback_seq} css={listItem}>
-                <FeedbackContentsBox
-                  Feedback={Feedback}
-                  colorIndex={prevColorIndex}
-                  isMinePublic={Feedback.public}
-                />
-              </div>
-            );
-          })
-        ) : (
-          <p>{myInfo.nickname}님의 의견을 불러오는 중입니다.</p>
-        )}
+        <Slider {...settings}>
+          {myFeedbacks ? (
+            myFeedbacks.map((Feedback) => {
+              prevColorIndex = randomColor(prevColorIndex);
+              return (
+                <div key={Feedback.feedback_seq} css={[listItem]}>
+                  <FeedbackContentsBox
+                    Feedback={Feedback}
+                    colorIndex={prevColorIndex}
+                    isMinePublic={Feedback.public}
+                  />
+                </div>
+              );
+            })
+          ) : (
+            <p>{myInfo.nickname}님의 의견을 불러오는 중입니다.</p>
+          )}
+        </Slider>
       </div>
     </div>
   );
@@ -50,14 +88,9 @@ const nicknameBox = css`
 `;
 
 const listBox = css`
-  display: flex;
-  flex-wrap: nowrap;
-  flex-direction: row;
-  justify-content: flex-start;
-  gap: 15.4px;
   width: 100%;
   min-height: 150px;
-  padding-left: 16px;
+  padding: 1px 8.3px 0px;
   border-radius: 10px;
   background-color: white;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.16);
@@ -65,12 +98,9 @@ const listBox = css`
 `;
 
 const listItem = css`
-  display: flex;
-  align-items: stretch;
-  margin: 14.784px 0;
+  margin: 14.784px 7.7px;
   height: 135.52px;
-  flex-basis: calc(33.3333% - 20px);
-  width: 100%;
+  width: calc(100% - 15.4px) !important;
   overflow: hidden;
 `;
 

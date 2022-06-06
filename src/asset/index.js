@@ -33,6 +33,7 @@ import OrangeT from './OrangeT.svg';
 import OwnWeb from './OwnWeb.svg';
 import edit_toggle from './edit_toggle.svg';
 import newWidgetNotice from './newWidgetNotice.svg';
+import feedbackPass from './feedbackPass.svg';
 
 export {
   arrow_left,
@@ -70,4 +71,5 @@ export {
   OwnWeb,
   edit_toggle,
   newWidgetNotice,
+  feedbackPass,
 };
