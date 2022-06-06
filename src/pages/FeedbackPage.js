@@ -58,7 +58,6 @@ function FeedbackPage() {
       if (data) {
         setFeedbacks(data.publicFeedback);
         setMyFeedbacks(data.myFeedback);
-        console.log(data);
       }
     }
   }, [myFeedbacksRes]);
