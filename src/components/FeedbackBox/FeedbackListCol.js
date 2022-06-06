@@ -24,7 +24,7 @@ function FeedbackListCol({ seq, list, needFeedbackInfo }) {
           })}
         {needFeedbackInfo === 1 && (
           <li css={listItem}>
-            <FeedbackContentsBox prevColorIndex={prevColorIndex} />
+            <FeedbackContentsBox colorIndex={prevColorIndex} />
           </li>
         )}
       </ul>
