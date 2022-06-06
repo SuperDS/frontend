@@ -6,7 +6,6 @@ function MyfeedbackList({ myFeedbacks, myInfo }) {
   // eslint-disable-next-line
   let prevColorIndex = null;
 
-  console.log(myFeedbacks);
   return (
     <div css={[ContentBox]}>
       <p css={[nicknameBox]}>{myInfo.nickname}님의 의견</p>

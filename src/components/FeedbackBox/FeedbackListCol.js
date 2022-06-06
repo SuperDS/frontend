@@ -5,6 +5,7 @@ import FeedbackContentsBox from './FeedbackContentsBox';
 function FeedbackListCol({ seq, list, needFeedbackInfo }) {
   // eslint-disable-next-line
   let prevColorIndex = null;
+  console.log(prevColorIndex);
 
   return (
     <div key={seq} css={listBox}>

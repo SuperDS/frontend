@@ -72,7 +72,7 @@ function Login() {
       if (userInfoRes.data.code !== 'ok') {
         alert('정보를 가져오는 과정에서 오류가 발생하였습니다.');
       } else {
-        history.push(userInfoRes.data.data.url);
+        window.location.reload();
       }
     }
   }, [userInfoRes]);
@@ -188,6 +188,9 @@ const commonInputStyle = css`
   outline: none;
   border-radius: 30px;
   border: 0;
+  &:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px #fff inset;
+  }
 `;
 
 const commonLoginButtonStyle = css`
