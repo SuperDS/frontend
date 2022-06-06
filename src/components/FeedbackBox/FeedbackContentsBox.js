@@ -34,11 +34,11 @@ export function FeedbackContentsBox({ colorIndex, Feedback, isMinePublic }) {
 }
 
 export function randomColor(prevColorIndex) {
-  let index = prevColorIndex;
-  while (index === prevColorIndex) {
-    index = Math.floor(Math.random() * 5);
+  let newColorIndex = prevColorIndex;
+  while (newColorIndex === prevColorIndex) {
+    newColorIndex = Math.floor(Math.random() * 5);
   }
-  return index;
+  return newColorIndex;
 }
 
 const blueColor = css`
