@@ -3,7 +3,7 @@ import { css } from '@emotion/react';
 import { useEffect, useState } from 'react';
 import { useMyInfo } from '../../hooks/myInfo';
 import useRequestAuth from '../../hooks/useRequestAuth';
-import { mainColor, subColor } from '../../styles/color';
+import { mainColor } from '../../styles/color';
 import { getApiEndpoint } from '../../utils/util';
 
 const inputColor = '#fff';
@@ -103,7 +103,7 @@ const buttonBox = css`
   line-height: 1.4;
   color: #ffffff;
   border-radius: 28px;
-  background-color: ${subColor};
+  background-color: #2e2e2e;
   &:hover {
     background-color: ${mainColor};
   }

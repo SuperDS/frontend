@@ -1,19 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 
-function FeedbackContentsBox({ prevColorIndex, Feedback, isMinePublic }) {
+export function FeedbackContentsBox({ colorIndex, Feedback, isMinePublic }) {
   const colors = [blueColor, yellowColor, blackColor, orangeColor, greenColor];
-  console.log(isMinePublic);
-  function randomColor() {
-    let index = prevColorIndex;
-    while (index === prevColorIndex) {
-      index = Math.floor(Math.random() * 5);
-    }
-    prevColorIndex = index;
-    return colors[index];
-  }
+
   return (
-    <div css={[FeedbackBoxCss, randomColor()]}>
+    <div css={[FeedbackBoxCss, colors[colorIndex]]}>
       {Feedback ? (
         <>
           <div
@@ -41,7 +33,13 @@ function FeedbackContentsBox({ prevColorIndex, Feedback, isMinePublic }) {
   );
 }
 
-export default FeedbackContentsBox;
+export function randomColor(prevColorIndex) {
+  let newColorIndex = prevColorIndex;
+  while (newColorIndex === prevColorIndex) {
+    newColorIndex = Math.floor(Math.random() * 5);
+  }
+  return newColorIndex;
+}
 
 const blueColor = css`
   background-color: #507fe9;
@@ -66,6 +64,7 @@ const greenColor = css`
 
 const FeedbackBoxCss = css`
   width: 100%;
+  height: 100%;
   padding: 14.78px 17.25px 20.328px;
   word-break: break-all;
   border-bottom-right-radius: 15px;
