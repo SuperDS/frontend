@@ -3,7 +3,7 @@ import { css } from '@emotion/react';
 import { FeedbackContentsBox, randomColor } from './FeedbackContentsBox';
 
 function FeedbackListCol({ seq, list, needFeedbackInfo }) {
-  let prevColorIndex = null;
+  let prevColorIndex = 1;
 
   return (
     <div key={seq} css={listBox}>
