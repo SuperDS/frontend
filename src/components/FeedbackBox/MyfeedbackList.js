@@ -1,9 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import FeedbackContentsBox from './FeedbackContentsBox';
+import { FeedbackContentsBox, randomColor } from './FeedbackContentsBox';
 
 function MyfeedbackList({ myFeedbacks, myInfo }) {
-  // eslint-disable-next-line
   let prevColorIndex = null;
 
   return (
@@ -12,11 +11,13 @@ function MyfeedbackList({ myFeedbacks, myInfo }) {
       <div css={[listBox]}>
         {myFeedbacks ? (
           myFeedbacks.map((Feedback) => {
+            console.log(prevColorIndex);
+            prevColorIndex = randomColor(prevColorIndex);
             return (
               <div key={Feedback.feedback_seq} css={listItem}>
                 <FeedbackContentsBox
                   Feedback={Feedback}
-                  prevColorIndex={prevColorIndex}
+                  colorIndex={prevColorIndex}
                   isMinePublic={Feedback.public}
                 />
               </div>
