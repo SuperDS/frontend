@@ -14,6 +14,7 @@ import { useRequest } from '../hooks/useRequest';
 function FeedbackPage() {
   const [myFeedbacks, setMyFeedbacks] = useState(null);
   const [feedbacks, setFeedbacks] = useState(null);
+  const [loading, setLoading] = useState(null);
   const { loggedIn, myInfo } = useMyInfo();
 
   const endpoint = `${getApiEndpoint()}/feedback`;
@@ -57,10 +58,14 @@ function FeedbackPage() {
       if (data) {
         setFeedbacks(data.publicFeedback);
         setMyFeedbacks(data.myFeedback);
-        console.log(data);
       }
     }
   }, [myFeedbacksRes]);
+
+  useEffect(() => {
+    if (loggedIn === true && myFeedbacks !== null) setLoading('loggedIn');
+    else if (loggedIn !== null && myFeedbacks !== null) setLoading('guest');
+  });
 
   return (
     <div css={[pageBox, paddingBottom]}>
@@ -68,10 +73,10 @@ function FeedbackPage() {
       <div css={contentsBox}>
         <MainSentence />
         <FeedbackInputBox />
-        {loggedIn === true && myFeedbacks !== null && (
+        {loading === 'loggedIn' && (
           <MyfeedbackList myFeedbacks={myFeedbacks} myInfo={myInfo} />
         )}
-        {loggedIn !== null && myFeedbacks !== null && (
+        {(loading === 'guest' || loading === 'loggedIn') && (
           <FeedbackList feedbacks={feedbacks} />
         )}
       </div>

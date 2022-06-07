@@ -12,7 +12,7 @@ function SplashPage() {
 
   const dest = useMemo(() => {
     if (loggedIn === true) {
-      return `/${myInfo.url}`;
+      return `main`;
     } else if (loggedIn === false) {
       return 'main';
     }
