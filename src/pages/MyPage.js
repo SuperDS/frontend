@@ -17,14 +17,18 @@ import {
 } from '../utils/util';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import DummyComponent from '../components/MyPage/DummyComponent';
+import MyPageComment from '../components/MyPage/MyPageComment';
+import MyPageCommentWrite from '../components/MyPage/MyPageCommentWrite';
+import MyPageProfile from '../components/MyPage/MyPageProfile';
 
 function MyPage() {
   const settings = {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 2,
+    slidesToShow: 4,
+    slidesToScroll: 1,
   };
   const { myInfo } = useMyInfo();
   const history = useHistory();
@@ -103,23 +107,23 @@ function MyPage() {
               display: flex;
               height: 100%;
               align-items: center;
-              border: 1px solid lightgray;
+              /* border: 1px solid lightgray; */
             `}
           >
             <div
               css={css`
                 display: flex;
                 margin: 5px;
-                border: 1px solid lightgray;
+                /* border: 1px solid lightgray; */
               `}
             >
-              <div css={ProfileAZone}> profile</div>
+              <div css={ProfileAZone}> </div>
             </div>
             <div
               css={css`
                 width: 100%;
                 margin: 5px;
-                border: 1px solid lightgray;
+                /* border: 1px solid lightgray; */
               `}
             >
               <div
@@ -127,7 +131,7 @@ function MyPage() {
                   width: 40%;
                   height: 30px;
                   margin: 5px;
-                  border: 1px solid lightgray;
+                  /* border: 1px solid lightgray; */
                   text-align: left;
                   font-size: 30px;
                 `}
@@ -138,7 +142,7 @@ function MyPage() {
                 css={css`
                   width: 40%;
                   margin: 5px;
-                  border: 1px solid lightgray;
+                  /* border: 1px solid lightgray; */
                   text-align: left;
                 `}
               >
@@ -148,7 +152,7 @@ function MyPage() {
                 css={css`
                   width: 40%;
                   margin: 5px;
-                  border: 1px solid lightgray;
+                  /* border: 1px solid lightgray; */
                   text-align: left;
                 `}
               >
@@ -203,7 +207,7 @@ function MyPage() {
               css={css`
                 display: flex;
                 margin: 5px;
-                border: 1px solid lightgray;
+                /* border: 1px solid lightgray; */
                 justify-content: center;
                 text-align: center;
               `}
@@ -244,15 +248,11 @@ function MyPage() {
         <div css={MyPageBZoneWrapper}>
           <div css={MyPageBZone}>
             <Slider {...settings}>
+              <DummyComponent />
+              <DummyComponent />
+              <DummyComponent />
               <PageBlock addBlock setPopUp={setPopUp} popUp={popUp} />
-              <PageBlock />
-              <PageBlock />
-              <PageBlock />
-              <PageBlock />
-              <PageBlock />
-              <PageBlock />
-              <PageBlock />
-              <PageBlock />
+              <PageBlock addBlock setPopUp={setPopUp} popUp={popUp} />
             </Slider>
             <div css={[overFlowHidden]} />
           </div>
@@ -264,8 +264,18 @@ function MyPage() {
             justify-content: center;
           `}
         >
-          <div css={MyPageCZone}>c zone</div>
-          <div css={MyPageDZone}>d zone</div>
+          <div css={MyPageCZone}>
+            <MyPageProfile />
+          </div>
+          <div css={MyPageDZone}>
+            <MyPageCommentWrite />
+            <MyPageComment />
+            <MyPageComment />
+            <MyPageComment />
+            <MyPageComment />
+            <MyPageComment />
+            <MyPageComment />
+          </div>
         </div>
       </div>
       {popUp && <AddPagePopUp setPopUp={setPopUp} popUp={popUp} />}
@@ -285,26 +295,30 @@ const MyPageWrapper = css`
 
 const MyPageAZone = css`
   width: 1470px;
-  height: 320px;
+  margin-top: 70px;
+  height: 200px;
   background-color: white;
   display: inline-block;
+  /* border: 1px solid lightgray; */
 `;
 
 const ProfileAZone = css`
   width: 100px;
   height: 100px;
-  background-color: white;
+  background-color: lightgray;
+  text-align: center;
+  justify-content: center;
   border-radius: 50%;
   display: flex;
 `;
 
 const MyPageBZoneWrapper = css`
   width: 100vw;
-  height: 360px;
+  height: 300px;
   background-color: white;
   display: flex;
   justify-content: center;
-  border: 1px solid lightgray;
+  /* border: 1px solid lightgray; */
 `;
 const MyPageBZone = css`
   width: 1470px;
@@ -322,10 +336,10 @@ const MyPageCZone = css`
   margin: 20px 10px;
   height: 900px;
   background-color: white;
-  border: 1px solid lightgray;
+  /* border: 1px solid lightgray; */
   border-radius: 20px 20px 20px 20px;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
-  align-items: center;
+  /* align-items: center; */
   text-align: center;
 
   display: flex;
@@ -338,10 +352,10 @@ const MyPageDZone = css`
   background-color: white;
   border-radius: 20px 20px 20px 20px;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
-  align-items: center;
+  /* align-items: center; */
   text-align: center;
-
   display: flex;
+  flex-direction: column;
 `;
 
 const overFlowHidden = css`
