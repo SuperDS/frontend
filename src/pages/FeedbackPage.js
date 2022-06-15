@@ -15,6 +15,7 @@ function FeedbackPage() {
   const [myFeedbacks, setMyFeedbacks] = useState(null);
   const [feedbacks, setFeedbacks] = useState(null);
   const [loading, setLoading] = useState(null);
+  const [needReload, setNeedReload] = useState(false);
   const { loggedIn, myInfo } = useMyInfo();
 
   const endpoint = `${getApiEndpoint()}/feedback`;
@@ -28,10 +29,14 @@ function FeedbackPage() {
     method: 'get',
   });
 
+  const sendReloadSignal = () => {
+    setNeedReload(!needReload);
+  };
+
   useEffect(() => {
     if (loggedIn === false) requestFeedbacks();
     else if (loggedIn === true) requestMyFeedbacks();
-  }, [loggedIn]);
+  }, [loggedIn, needReload]);
   useEffect(() => {
     if (feedbacksRes && feedbacksRes.data) {
       const { code, data, message } = feedbacksRes.data;
@@ -72,7 +77,7 @@ function FeedbackPage() {
       <Header pageType='feedback' />
       <div css={contentsBox}>
         <MainSentence />
-        <FeedbackInputBox />
+        <FeedbackInputBox sendReloadSignal={sendReloadSignal} />
         {loading === 'loggedIn' && (
           <MyfeedbackList myFeedbacks={myFeedbacks} myInfo={myInfo} />
         )}

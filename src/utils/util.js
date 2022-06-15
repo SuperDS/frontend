@@ -48,8 +48,14 @@ export function isWrongToken(code) {
   return code === 'wrong_token';
 }
 
+export function isURL(formedUrl) {
+  const matched = formedUrl.match(regexAlnum);
+  return matched && matched.length === formedUrl.length;
+}
+
 export const regexNumber = /\d/gi;
 export const regexAlpha = /[a-zA-Z]/gi;
+export const regexAlnum = /[0-9a-zA-Z]/gi;
 export const regexSymbol = /[\^~`$@$+="':;/\\,.<>[\]{}|₩!%*#?&()_-]/gi;
 
 export function hasNumber(word) {

@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { useEffect, useMemo, useState } from 'react';
-import { isEmail, isURL } from 'validator';
+import { isEmail } from 'validator';
 import { css } from '@emotion/react';
 import {
   COLOR_STYLE,
@@ -8,7 +8,7 @@ import {
   FlexSpaceBetweenCenter,
   SHADOW_STYLE,
 } from '../styles/GlobalStyles';
-import { isPassword, getApiEndpoint } from '../utils/util';
+import { isPassword, getApiEndpoint, isURL } from '../utils/util';
 import useRequestAuth from './useRequestAuth';
 
 function useInput({ inputType, id, type, ...args }) {
@@ -34,9 +34,8 @@ function useInput({ inputType, id, type, ...args }) {
     } else if (inputType === 'nickname') {
       if (value.length > 15) return '15글자 이하로 입력해주세요';
     } else if (inputType === 'url') {
-      const formedUrl = `http://${value}.kr`;
-      if (!isURL(formedUrl))
-        return '언더스코어(_), 콜론(:), 공백문자( ), 슬래시(/)는 사용할 수 없습니다.';
+      // const formedUrl = `http://${value}.kr`;
+      if (!isURL(value)) return '숫자와 영어만 사용하실 수 있습니다!';
       else if (value.length < 4) return '4글자 이상 입력해주세요.';
       else if (value.length > 20) return '20글자 이하로 입력해주세요';
     }
