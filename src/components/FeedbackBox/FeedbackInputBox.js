@@ -1,17 +1,26 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useMyInfo } from '../../hooks/myInfo';
 import useRequestAuth from '../../hooks/useRequestAuth';
 import { mainColor } from '../../styles/color';
 import { getApiEndpoint } from '../../utils/util';
+import { PlainPopUp } from './PlainPopUp';
 
 const inputColor = '#fff';
 
-function FeedbackInputBox() {
+function FeedbackInputBox(props) {
   const [inputmessage, setInputmessage] = useState('');
+  const [showPopUp, setShowPopUp] = useState(false);
+  const [popUpText, setPopUpText] = useState({
+    topText: '',
+    middleText: '',
+    bottomText: '',
+  });
   const { loggedIn } = useMyInfo();
   const endpoint = `${getApiEndpoint()}/feedback/register`;
+
+  const feedbackRef = useRef(null);
 
   const { res, request } = useRequestAuth({
     endpoint: endpoint,
@@ -21,27 +30,70 @@ function FeedbackInputBox() {
     },
   });
 
+  const { sendReloadSignal } = props;
+
+  function closePopUp() {
+    setShowPopUp(false);
+  }
+
   function sendAlert() {
-    alert('피드백은 회원 가입 후에 작성 가능합니다!');
+    // alert('피드백은 회원 가입 후에 작성 가능합니다!');
+    setPopUpText({
+      topText: '죄송합니다!',
+      middleText: '',
+      bottomText: '피드백은 회원 가입 후에 작성 가능합니다!',
+    });
+    setShowPopUp(true);
   }
 
   function sendQnA() {
     if (loggedIn) {
-      if (inputmessage.length < 10) alert('10자 이상 작성해주셔야 합니다!');
-      else {
+      if (feedbackRef.current.value.length < 10) {
+        // alert('10자 이상 작성해주셔야 합니다!')
+        setPopUpText({
+          topText: '죄송합니다!',
+          middleText: '',
+          bottomText: '10자 이상 작성해주셔야 합니다!',
+        });
+
+        setShowPopUp(true);
+      } else {
         request();
-        alert(
-          '온잇 팀이 의견을 검토하기까지는 피드백 화면에서 나의 의견을 확인할 수 없어요. 소중한 의견을 신속하게 확인할게요!'
-        );
+        // alert(
+        //   '온잇 팀이 의견을 검토하기까지는 피드백 화면에서 나의 의견을 확인할 수 없어요. 소중한 의견을 신속하게 확인할게요!'
+        // );
+        // localStorage.setItem('submitSuccess', 'true');
+        setPopUpText({
+          topText: '전송 완료',
+          middleText: '보내주신 메시지가 무사히 전달되었어요!',
+          bottomText:
+            '온잇 팀이 의견을 검토하기까지는 피드백\n화면에서 나의 의견을 확인할 수 없어요.\n소중한 의견을 신속하게 확인할게요!',
+        });
+        feedbackRef.current.value = '';
+        setShowPopUp(true);
       }
     } else {
       sendAlert();
     }
   }
 
+  // useEffect(() => {
+  //   if (localStorage.getItem('submitSuccess') === 'true') {
+  //     setPopUpText({
+  //       topText: '피드백 전달 완료',
+  //       middleText: '',
+  //       bottomText:
+  //         '소중한 의견 감사합니다!\n\nONIT의 성장에 큰 도움이 될 거에요.',
+  //     });
+  //     setShowPopUp(true);
+  //   }
+  //   localStorage.removeItem('submitSuccess');
+  // }, []);
+
   useEffect(() => {
     if (res && res.data) {
-      window.location.reload();
+      // window.location.reload();
+      sendReloadSignal();
     }
   }, [res]);
 
@@ -57,12 +109,15 @@ function FeedbackInputBox() {
 
   return (
     <div css={[container]}>
+      <PlainPopUp state={showPopUp} close={closePopUp} textObject={popUpText} />
       <input
         css={[removeInputCss, inputBox]}
+        type='text'
         value={inputmessage}
         placeholder='온잇에 대한 생생한 의견을 보내주세요!'
         onChange={handleMessageChange}
         onKeyDown={handleKeyDown}
+        ref={feedbackRef}
       />
       <button
         type='button'
