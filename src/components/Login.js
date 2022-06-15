@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef, useLayoutEffect } from 'react';
 import { css } from '@emotion/react';
 import { useHistory } from 'react-router';
 import { getApiEndpoint, setLocalStorage } from '../utils/util';
@@ -11,7 +11,7 @@ import {
 } from '../styles/GlobalStyles';
 import useRequestAuth from '../hooks/useRequestAuth';
 
-function Login() {
+function Login(props) {
   const [emailValue, setEmailValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
 
@@ -39,6 +39,13 @@ function Login() {
   };
   const history = useHistory();
 
+  const inputRef = useRef(null);
+  useLayoutEffect(() => {
+    if (inputRef.current !== null) inputRef.current.focus();
+  }, []);
+
+  const { close } = props;
+
   const handleLocalLogin = () => {
     // if (email.state !== 'ok' && password.state !== 'ok') {
     //   alert('아이디와 비밀번호를 확인해주세요.');
@@ -49,6 +56,14 @@ function Login() {
     // } else {
     // }
     request();
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      handleLocalLogin();
+    } else if (event.key === 'Escape') {
+      close();
+    }
   };
 
   useEffect(() => {
@@ -100,6 +115,8 @@ function Login() {
               value={emailValue}
               placeholder='아이디'
               onChange={onEmailChange}
+              onKeyDown={handleKeyDown}
+              ref={inputRef}
             />
           </div>
           <div css={[commonInputBoxStyle]}>
@@ -109,6 +126,7 @@ function Login() {
               value={passwordValue}
               placeholder='비밀번호'
               onChange={onPasswordChange}
+              onKeyDown={handleKeyDown}
             />
           </div>
           <button
