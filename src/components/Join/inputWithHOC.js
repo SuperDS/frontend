@@ -67,10 +67,4 @@ const commonInputStyle = css`
   outline: none;
   border-radius: 22.5px;
   border: 0;
-  &:-webkit-autofill,
-  &:-webkit-autofill:hover,
-  &:-webkit-autofill:focus,
-  &:-webkit-autofill:active {
-    -webkit-box-shadow: 0 0 0 1000px #fff inset;
-  }
 `;

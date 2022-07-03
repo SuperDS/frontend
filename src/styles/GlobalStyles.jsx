@@ -120,6 +120,15 @@ export const DisplayNone = css`
   display: none;
 `;
 
+export const autofillF2f2f2 = css`
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px #f2f2f2 inset;
+  }
+`;
+
 export const DisplayBlock = css`
   display: block;
 `;

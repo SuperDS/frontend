@@ -16,7 +16,6 @@ import {
 } from '../styles/GlobalStyles';
 
 function TermModal({ closeModal, setAgreementTrue }) {
-  // const label = '이메일 인증';
   const { btn, img } = getAbsoluteBtn(25, 42, 25);
 
   const handleSubmit = () => {

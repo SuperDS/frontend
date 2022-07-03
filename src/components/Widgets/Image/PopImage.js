@@ -13,6 +13,7 @@ import {
   SHADOW_STYLE,
   BasicInputStyle,
   DisplayNone,
+  autofillF2f2f2,
 } from '../../../styles/GlobalStyles';
 import { useInitWidget, usePostImage } from '../../../hooks/widget';
 import { TYPE_IMAGE } from '../../../utils/constantValue';
@@ -132,7 +133,7 @@ function PopImage(props) {
               type='file'
               name='imgae_file'
               accept='image/png, image/jpeg, image/gif'
-              css={DisplayNone}
+              css={[DisplayNone, autofillF2f2f2]}
               onChange={handleLocalUpload}
               ref={imageInput}
             />

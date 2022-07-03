@@ -1,14 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { css } from '@emotion/react';
-import { closeSet } from '../asset';
 import {
   COLOR_STYLE,
-  commonBtn,
   FlexCenter,
   FlexColCenter,
   FlexColSpaceBetween,
-  getAbsoluteBtn,
   InitButtonStyle,
   OrangeColorButton,
   RoundButtonSmall,
@@ -19,7 +16,6 @@ import { getApiEndpoint, isOk } from '../utils/util';
 
 function EmailCertModal({ closeModal, certSucceed, email, state }) {
   const label = '이메일 인증';
-  const { btn, img } = getAbsoluteBtn(25, 42, 25);
 
   const endpoint = `${getApiEndpoint()}/auth/email/${email}`;
   const { res: sendRes, request: send } = useRequest({
@@ -82,18 +78,6 @@ function EmailCertModal({ closeModal, certSucceed, email, state }) {
     <div css={[Container]}>
       <div css={PopupHeader}>
         <p css={[PopupLabel]}>{label}</p>
-
-        <button
-          type='button'
-          css={[commonBtn, btn]}
-          onClick={() => {
-            setClose(true);
-          }}
-        >
-          <div css={img}>
-            <img alt='img' height='50px' src={closeSet} />
-          </div>
-        </button>
       </div>
 
       <div css={[PopUpBody]}>
