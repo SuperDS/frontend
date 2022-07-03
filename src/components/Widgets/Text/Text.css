@@ -1,13 +1,22 @@
+.TextEditor {
+  height: 100%;
+}
+
 .Editor {
-  width: 500px;
-  --ck-spacing-standard: 0
+  height: 100%;
+  /* --ck-spacing-standard: 15px;
+  --ck-border-radius: 9px;
+  --ck-color-base-active: hsla(0, 0%, 0%, 0);
+  --ck-color-shadow-inner: hsla(0, 0%, 0%, 0); */
 }
 
 .Textbox {
-  text-indent: 1em;
-  width: 500px;
-  height: 500px;
-  border-radius: 10px;
+  height: 100%;
+  /* border-radius: 10px;
   background-color: white;
-  border: 1px solid black;
+  border: 1px solid black; */
+}
+
+.ck.ck-editor__editable {
+  height: 100%;
 }

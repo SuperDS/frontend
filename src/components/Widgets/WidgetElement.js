@@ -61,11 +61,12 @@ export function WidgetElement({
 
   const openEditModalByType = (id, type) => {
     const stringType = convertType2String(type);
+    const popUpWindow = type !== TYPE_TEXT;
     dispatch(
       createReplacementModalAction({
         ...modal,
         targetWidgetId: id,
-        popUpWindow: true,
+        popUpWindow: { popUpWindow },
         popUpWindowType: stringType,
       })
     );
@@ -89,10 +90,10 @@ export function WidgetElement({
       return <ImageBox element={element} mode={mode} />;
     } else if (curInfo.widget_type === TYPE_VIDEO) {
       return <VideoBox element={element} mode={mode} />;
+    } else if (curInfo.widget_type === TYPE_TEXT) {
+      return <TextBox element={element} />;
     } else if (curInfo.widget_type === TYPE_MOUSE) {
       return <MouseOverBox element={element} />;
-    } else if (curInfo.widget_type === TYPE_TEXT) {
-      return <TextBox />;
     } else if (curInfo.widget_type === TYPE_NONEDISPLAY) {
       return <></>;
     } else {
@@ -129,7 +130,8 @@ export function WidgetElement({
     >
       {mode === 'edit' && hover && (
         <>
-          <div css={[positionAbsolute, hoverBackground]} />
+          {/* 이미 있는 위젯 위에 마우스 호버 시 투명한 회색 레이어 */}
+          {/* <div css={[positionAbsolute, hoverBackground]} /> */}
           <button
             type='button'
             css={[commonBtn, btn]}
