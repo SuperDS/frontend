@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { css } from '@emotion/react';
 
 import {
+  autofillF2f2f2,
   BasicInputStyle,
   COLOR_STYLE,
   commonBtn,
@@ -65,7 +66,7 @@ function PopVideo({ label, endPop }) {
         type='url'
         name='url'
         value={url}
-        css={[urlInputStyle]}
+        css={[urlInputStyle, autofillF2f2f2]}
         placeholder='링크를 입력해주세요'
         onChange={handleChange}
         onKeyDown={handleKeyDown}
