@@ -11,7 +11,7 @@ import {
 } from '../styles/GlobalStyles';
 import useRequestAuth from '../hooks/useRequestAuth';
 
-function Login(props) {
+function Login() {
   const [emailValue, setEmailValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
 
@@ -44,8 +44,6 @@ function Login(props) {
     if (inputRef.current !== null) inputRef.current.focus();
   }, []);
 
-  const { close } = props;
-
   const handleLocalLogin = () => {
     // if (email.state !== 'ok' && password.state !== 'ok') {
     //   alert('아이디와 비밀번호를 확인해주세요.');
@@ -61,8 +59,6 @@ function Login(props) {
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
       handleLocalLogin();
-    } else if (event.key === 'Escape') {
-      close();
     }
   };
 
