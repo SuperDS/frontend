@@ -3,7 +3,7 @@ import React from 'react';
 import { css } from '@emotion/react';
 import { WIDGET_COMMON_RADIUS } from '../../../styles/style';
 
-function YoutubeVideo({ embedId }) {
+function YoutubeVideo({ embedId, width, height }) {
   // const autoplay = props.autoplay || 'autoplay=1';
   if (embedId === undefined) {
     return <p>아직 위젯이 없습니다.</p>;
@@ -19,7 +19,15 @@ function YoutubeVideo({ embedId }) {
   const options = `?${reset_style}&${mute}&${loop}`;
 
   return (
-    <div css={radiusStyle}>
+    <div
+      css={[
+        radiusStyle,
+        css`
+          width: ${width};
+          height: ${height};
+        `,
+      ]}
+    >
       <iframe
         width='100%'
         height='100%'
@@ -33,9 +41,12 @@ function YoutubeVideo({ embedId }) {
   );
 }
 
+YoutubeVideo.defaultProps = {
+  width: '100%',
+  height: '100%',
+};
+
 const radiusStyle = css`
-  width: 100%;
-  height: 100%;
   background: #000;
   webkit-border-radius: 10px;
   border-radius: ${WIDGET_COMMON_RADIUS};

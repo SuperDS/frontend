@@ -18,57 +18,55 @@ import {
 
 function MainContents() {
   return (
-    <>
-      <div css={[containerBox, marginLeft]}>
-        <div css={[upArrow, moveUpArrowRotate]}>
-          <img width='100%' src={mainPageUpArrow} />
-        </div>
-        <div css={[fontBlockBox, buildBox]}>
-          <img width='100%' src={BlackBuild} />
-        </div>
-        <div css={[fontBlockBox, yourBox]}>
-          <img width='100%' src={BlackYour} />
-        </div>
-        <div css={[fontBlockBox, animationBoxwidth]}>
-          <div css={[bottomInnerBox]}>
-            <div css={[letterBlock, letterO, moveLeftO]}>
-              <img src={OrangeO} />
-            </div>
-            <div css={[letterBlock, disapppear]}>
-              <img src={BlackW} />
-            </div>
-            <div css={[letterBlock, moveLeftN]}>
-              <img src={OrangeN} />
-            </div>
-            <div css={[letterspace]} />
-            <div css={[letterBlock, disapppear]}>
-              <img src={BlackW} />
-            </div>
-            <div css={[letterBlock, disapppear]}>
-              <img src={BlackE} />
-            </div>
-            <div css={[letterBlock, disapppear]}>
-              <img src={BlackB} />
-            </div>
-            <div css={[letterBlock, disapppear]}>
-              <img src={BlackS} />
-            </div>
-            <div css={[letterBlock, moveLeftIT]}>
-              <img src={OrangeI} />
-            </div>
-            <div css={[letterBlock, moveLeftIT]}>
-              <img src={OrangeT} />
-            </div>
-            <div css={[letterBlock, disapppear]}>
-              <img src={BlackE} />
-            </div>
+    <div css={[containerBox, marginLeft]}>
+      <div css={[upArrow, moveUpArrowRotate]}>
+        <img width='100%' src={mainPageUpArrow} />
+      </div>
+      <div css={[fontBlockBox, buildBox]}>
+        <img width='100%' src={BlackBuild} />
+      </div>
+      <div css={[fontBlockBox, yourBox]}>
+        <img width='100%' src={BlackYour} />
+      </div>
+      <div css={[fontBlockBox, animationBoxwidth]}>
+        <div css={[bottomInnerBox]}>
+          <div css={[letterBlock, letterO, moveLeftO]}>
+            <img src={OrangeO} />
+          </div>
+          <div css={[letterBlock, disapppear]}>
+            <img src={BlackW} />
+          </div>
+          <div css={[letterBlock, moveLeftN]}>
+            <img src={OrangeN} />
+          </div>
+          <div css={[letterspace]} />
+          <div css={[letterBlock, disapppear]}>
+            <img src={BlackW} />
+          </div>
+          <div css={[letterBlock, disapppear]}>
+            <img src={BlackE} />
+          </div>
+          <div css={[letterBlock, disapppear]}>
+            <img src={BlackB} />
+          </div>
+          <div css={[letterBlock, disapppear]}>
+            <img src={BlackS} />
+          </div>
+          <div css={[letterBlock, moveLeftIT]}>
+            <img src={OrangeI} />
+          </div>
+          <div css={[letterBlock, moveLeftIT]}>
+            <img src={OrangeT} />
+          </div>
+          <div css={[letterBlock, disapppear]}>
+            <img src={BlackE} />
           </div>
         </div>
-        <div css={[downArrow, moveDownArrowRotate]}>
-          <img src={mainPageDownArrow} />
-        </div>
       </div>
-    </>
+      <div css={[downArrow, moveDownArrowRotate]}>
+        <img src={mainPageDownArrow} />
+      </div>
+    </div>
   );
 }
 
@@ -77,8 +75,7 @@ const containerBox = css`
   position: relative;
   width: 100%;
   height: 100%;
-  margin: 180px auto;
-  min-width: 1124px;
+  margin: 180px auto 110px;
   flex-direction: column;
   box-sizing: border-box;
 `;
