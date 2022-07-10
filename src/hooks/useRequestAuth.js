@@ -39,6 +39,10 @@ function useRequestAuth({ endpoint, method, data, contentType }) {
       axiosPromise = axios.post(endpoint, data, {
         headers,
       });
+    } else if (method === 'patch') {
+      axiosPromise = axios.patch(endpoint, data, {
+        headers,
+      });
     }
 
     axiosPromise

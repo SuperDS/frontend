@@ -18,9 +18,22 @@ import {
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import DummyComponent from '../components/MyPage/DummyComponent';
-import MyPageComment from '../components/MyPage/MyPageComment';
-import MyPageCommentWrite from '../components/MyPage/MyPageCommentWrite';
-import MyPageProfile from '../components/MyPage/MyPageProfile';
+import useRequestAuth from '../hooks/useRequestAuth';
+
+// import MyPageComment from '../components/MyPage/MyPageComment';
+// import MyPageCommentWrite from '../components/MyPage/MyPageCommentWrite';
+// import MyPageProfile from '../components/MyPage/MyPageProfile';
+
+// function MyPageProfileInput() {
+//   const { res, request } = useRequestAuth({
+//     endpoint: endpoint,
+//     method: 'post',
+//     data: {
+//       //불변성
+//       nickname: kdkdkdk,
+//     },
+//   });
+// }
 
 function MyPage() {
   const settings = {
@@ -44,6 +57,30 @@ function MyPage() {
   });
   // 나중에 필요할거라서, 일단 쓰는 중
   console.log(userSeq);
+  console.log(myInfo);
+  const [nicknametest, setNicknametext] = useState('');
+
+  // request
+
+  const endpoint = `${getApiEndpoint()}/profile/${userSeq}`;
+  console.log(`endpoint : ${endpoint}`);
+  const { res, request } = useRequestAuth({
+    endpoint: endpoint,
+    method: 'patch',
+    data: {
+      nickname: nicknametest,
+    },
+  });
+
+  console.log(`nickname :${nicknametest}`);
+  console.log(`res: ${res}`);
+  function sendProfile() {
+    request();
+  }
+
+  const onChangenickname = (e) => {
+    setNicknametext(e.target.value);
+  };
   // 내 페이지인지 남의 페이지인지 확인 로직
   useEffect(() => {
     // 로그인 유무
@@ -94,7 +131,19 @@ function MyPage() {
         pageUserName={nickname}
         pageType='normal'
       />
-
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      닉네임 입력 :
+      <input onChange={onChangenickname} value={nicknametest} />
+      <br />
+      {!nicknametest ? '빈문자' : nicknametest}
+      <button type='button' onClick={sendProfile}>
+        보내기
+      </button>
       <div css={MyPageWrapper}>
         <div
           css={css`
@@ -130,14 +179,15 @@ function MyPage() {
                 css={css`
                   width: 40%;
                   height: 30px;
-                  margin: 5px;
+                  margin: 15px;
                   /* border: 1px solid lightgray; */
                   text-align: left;
                   font-size: 30px;
                 `}
               >
-                이동섭
+                {myInfo ? myInfo.nickname : ''}
               </div>
+
               <div
                 css={css`
                   width: 40%;
@@ -146,7 +196,7 @@ function MyPage() {
                   text-align: left;
                 `}
               >
-                Today 122 Following 64 Follower 1982
+                {/* Following 64 Follower 1982 */}
               </div>
               <div
                 css={css`
@@ -218,6 +268,22 @@ function MyPage() {
                   margin: 5px;
                   background-color: #f5f5f5;
                   border-radius: 20px;
+                  width: 100px;
+                  height: 45px;
+                  justify-content: center;
+                  line-height: 45px;
+                  text-align: center;
+                `}
+              >
+                수정하기
+              </div>
+
+              {/* <div
+                css={css`
+                  display: flex;
+                  margin: 5px;
+                  background-color: #f5f5f5;
+                  border-radius: 20px;
                   width: 150px;
                   height: 45px;
                   justify-content: center;
@@ -226,8 +292,8 @@ function MyPage() {
                 `}
               >
                 팔로우
-              </div>
-              <div
+              </div> */}
+              {/* <div
                 css={css`
                   display: flex;
                   margin: 5px;
@@ -241,7 +307,7 @@ function MyPage() {
                 `}
               >
                 메시지
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -264,18 +330,13 @@ function MyPage() {
             justify-content: center;
           `}
         >
-          <div css={MyPageCZone}>
+          {/* <div css={MyPageCZone}>
             <MyPageProfile />
           </div>
           <div css={MyPageDZone}>
             <MyPageCommentWrite />
             <MyPageComment />
-            <MyPageComment />
-            <MyPageComment />
-            <MyPageComment />
-            <MyPageComment />
-            <MyPageComment />
-          </div>
+          </div> */}
         </div>
       </div>
       {popUp && <AddPagePopUp setPopUp={setPopUp} popUp={popUp} />}
@@ -331,32 +392,32 @@ const MyPageBZone = css`
   /* display: flex; */
 `;
 
-const MyPageCZone = css`
-  min-width: 700px;
-  margin: 20px 10px;
-  height: 900px;
-  background-color: white;
-  /* border: 1px solid lightgray; */
-  border-radius: 20px 20px 20px 20px;
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
-  /* align-items: center; */
-  text-align: center;
+// const MyPageCZone = css`
+//   min-width: 700px;
+//   margin: 20px 10px;
+//   height: 900px;
+//   background-color: white;
+//   /* border: 1px solid lightgray; */
+//   border-radius: 20px 20px 20px 20px;
+//   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+//   /* align-items: center; */
+//   text-align: center;
 
-  display: flex;
-`;
+//   display: flex;
+// `;
 
-const MyPageDZone = css`
-  min-width: 700px;
-  margin: 20px 10px;
-  height: 900px;
-  background-color: white;
-  border-radius: 20px 20px 20px 20px;
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
-  /* align-items: center; */
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-`;
+// const MyPageDZone = css`
+//   min-width: 700px;
+//   margin: 20px 10px;
+//   height: 900px;
+//   background-color: white;
+//   border-radius: 20px 20px 20px 20px;
+//   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+//   /* align-items: center; */
+//   text-align: center;
+//   display: flex;
+//   flex-direction: column;
+// `;
 
 const overFlowHidden = css`
   overflow: hidden;
