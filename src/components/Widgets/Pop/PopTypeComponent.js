@@ -4,9 +4,6 @@ import PopImage from '../Image/PopImage';
 import PopVideo from '../Video/PopVideo';
 import PopNonType from '../NonType/PopNonType';
 // import PopText from '../Text/PopText';
-import { useInitWidget } from '../../../hooks/widget';
-
-const { init } = useInitWidget();
 
 const PopTypeComponent = (props) => {
   const { modal } = useSelector((state) => ({
