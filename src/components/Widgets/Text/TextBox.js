@@ -2,19 +2,10 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import TextEditor from './Text';
 
-function TextBox({ element }) {
-  const [hasText, setHasText] = useState(false);
-  const [textData, setTextData] = useState('');
-
+function TextBox({ element, mode }) {
   const { modal } = useSelector((state) => ({
     modal: state.info.modal,
   }));
-
-  useEffect(() => {
-    if (element.widget_data.thumbnail !== '') {
-      setHasText(true);
-    }
-  }, []);
 
   const Viewer = ({ content }) => {
     return (
@@ -24,15 +15,10 @@ function TextBox({ element }) {
       />
     );
   };
-  // return hasText ? (
-  //   <div className='TextEditor'>
-  //     <Viewer content={element.widget_data.thumbnail} />
-  //   </div>
-  // ) : (
-  //   <></>
-  // );
-  return (
-    <TextEditor setTextData={setTextData} widgetCode={element.widget_code} />
+  return mode === 'normal' ? (
+    <Viewer content={element.widget_data.thumbnail} />
+  ) : (
+    <TextEditor widgetId={element.i} />
   );
 }
 

@@ -3,7 +3,10 @@ import { useSelector } from 'react-redux';
 import PopImage from '../Image/PopImage';
 import PopVideo from '../Video/PopVideo';
 import PopNonType from '../NonType/PopNonType';
-import PopText from '../Text/PopText';
+// import PopText from '../Text/PopText';
+import { useInitWidget } from '../../../hooks/widget';
+
+const { init } = useInitWidget();
 
 const PopTypeComponent = (props) => {
   const { modal } = useSelector((state) => ({
@@ -26,9 +29,10 @@ const PopTypeComponent = (props) => {
         </div>
       );
     } else if (type === 'text') {
+      // 안씁니다.
       return (
         <div style={tempStyle}>
-          <PopText endPop={endPop} label='텍스트 추가' />
+          {/* <PopText endPop={endPop} label='텍스트 추가' /> */}
         </div>
       );
     } else {

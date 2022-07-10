@@ -7,8 +7,6 @@ import App from './App';
 import { store } from './redux/slice';
 import reportWebVitals from './reportWebVitals';
 
-require('dotenv').config();
-
 ReactDOM.render(
   <Provider store={store}>
     <HelmetProvider>
