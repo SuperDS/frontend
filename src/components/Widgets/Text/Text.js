@@ -1,42 +1,62 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import './Text.css';
-import { useSelector } from 'react-redux';
-
+import { useSelector, useDispatch } from 'react-redux';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
-import InlineEditor from '@ckeditor/ckeditor5-build-inline';
-import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment';
+import InlineEditor from 'ckeditor5-custom-build/build/ckeditor';
+import { createReplacementModalAction } from '../../../redux/slice';
+import { TYPE_TEXT } from '../../../utils/constantValue';
+import { useInitWidget } from '../../../hooks/widget';
 
 function TextEditor(props) {
   const { widgets, modal } = useSelector((state) => ({
     widgets: state.info.widgets,
     modal: state.info.modal,
   }));
-  const textWidgetRef = useRef(null);
-  let originText = '';
+
+  const { init } = useInitWidget();
+
+  const dispatch = useDispatch();
+  const setEditorWidgetId = (id) => {
+    dispatch(
+      createReplacementModalAction({
+        ...modal,
+        targetWidgetId: id,
+      })
+    );
+  };
+
+  const [thumbnail, setThumbnail] = useState('');
+
+  const handleSubmit = useCallback(() => {
+    if (modal.targetWidgetId !== '-1') {
+      init({ type: TYPE_TEXT, data: { thumbnail } });
+    }
+  }, [thumbnail]);
 
   useEffect(() => {
-    const items = JSON.parse(JSON.stringify(widgets.list));
-    const found = items.find(
-      (element) => element.widget_code === props.widgetCode
-    );
-    originText =
-      found?.widget_data !== undefined &&
-      found?.widget_data.thumbnail !== undefined
-        ? found.widget_data.thumbnail
-        : '';
-    console.log(originText);
-  }, [widgets]);
+    if (originText !== thumbnail) {
+      handleSubmit();
+    }
+  }, [thumbnail, handleSubmit]);
+
+  const originText = widgets.list.find(
+    (element) => element.i === props.widgetId
+  ).widget_data.thumbnail;
 
   return (
     <div className='TextEditor'>
       <div className='Textbox'>
-        <div className='Editor' ref={textWidgetRef}>
+        <div className='Editor'>
           <CKEditor
             style={{ margin: 0, padding: 0 }}
             editor={InlineEditor}
+            data={originText}
             config={{
-              plugins: [Alignment],
-              toolbar: ['heading', '|', 'link', 'bold', 'italic', 'alignment'],
+              toolbar: {
+                items: ['heading', '|', 'link', 'bold', 'italic', 'alignment'],
+                isFloating: true,
+                shouldGroupWhenFull: true,
+              },
               placeholder: '텍스트를 입력하세요!',
               heading: {
                 options: [
@@ -60,15 +80,37 @@ function TextEditor(props) {
                 ],
               },
               alignment: {
-                options: ['left', 'right'],
+                options: ['left', 'center', 'right'],
               },
+              link: {
+                defaultProtocol: 'https://',
+                decorators: {
+                  isExternal: {
+                    mode: 'automatic',
+                    callback: (url) => url.startsWith('https://'),
+                    attributes: {
+                      target: '_blank',
+                      rel: 'noopener noreferrer',
+                    },
+                  },
+                  isDownloadable: {
+                    mode: 'manual',
+                    label: 'Downloadable',
+                    attributes: {
+                      download: 'file.png',
+                    },
+                  },
+                },
+              },
+            }}
+            onFocus={() => {
+              if (props.widgetId !== undefined && props.widgetId !== -1) {
+                setEditorWidgetId(props.widgetId);
+              }
             }}
             onChange={(event, editor) => {
               const data = editor.getData();
-              props.setTextData(data);
-            }}
-            onReady={(editor) => {
-              editor.setData(originText);
+              setThumbnail(data);
             }}
           />
         </div>

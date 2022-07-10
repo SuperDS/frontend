@@ -91,7 +91,7 @@ export function WidgetElement({
     } else if (curInfo.widget_type === TYPE_VIDEO) {
       return <VideoBox element={element} mode={mode} />;
     } else if (curInfo.widget_type === TYPE_TEXT) {
-      return <TextBox element={element} />;
+      return <TextBox element={element} mode={mode} />;
     } else if (curInfo.widget_type === TYPE_MOUSE) {
       return <MouseOverBox element={element} />;
     } else if (curInfo.widget_type === TYPE_NONEDISPLAY) {
