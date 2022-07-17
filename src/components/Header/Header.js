@@ -10,6 +10,7 @@ import Login from '../Login';
 
 function Header({ userMatch, pageUrl, pageUserName, pageType }) {
   const history = useHistory();
+
   const [popUpLogin, setPopUpLogin] = useState(false);
 
   const { loggedIn, myInfo } = useMyInfo();

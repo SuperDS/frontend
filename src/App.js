@@ -8,10 +8,11 @@ import {
   JoinPage,
   FeedbackPage,
   EditModePage,
-  NormalModePage,
+  SinglePage,
   EmailCertPage,
   MyPage,
 } from './pages';
+import MultiPage from './pages/MultiPage';
 
 function App() {
   return (
@@ -24,8 +25,9 @@ function App() {
         <Route exact path='/callback/kakao' component={HandleKakaoLogin} />
         <Route exact path='/:id/' component={MyPage} />
         {/* 나중에 pageUrl로 바껴야 됨 */}
-        <Route exact path='/:id/bi' component={NormalModePage} />
+        <Route exact path='/:id/bi' component={SinglePage} />
         <Route exact path='/:id/edit' component={EditModePage} />
+        <Route exact path='/:id/:naviName/:page' component={MultiPage} />
         <Route
           exact
           path='/certificate/:email/:code'

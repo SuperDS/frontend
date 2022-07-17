@@ -55,15 +55,10 @@ function MyPage() {
     endpoint: `${getApiEndpoint()}/url/${pageUrl}/user`,
     method: 'get',
   });
-  // 나중에 필요할거라서, 일단 쓰는 중
-  console.log(userSeq);
-  console.log(myInfo);
   const [nicknametest, setNicknametext] = useState('');
 
   // request
-
   const endpoint = `${getApiEndpoint()}/profile/${userSeq}`;
-  console.log(`endpoint : ${endpoint}`);
   const { res, request } = useRequestAuth({
     endpoint: endpoint,
     method: 'patch',
@@ -72,7 +67,6 @@ function MyPage() {
     },
   });
 
-  console.log(`nickname :${nicknametest}`);
   console.log(`res: ${res}`);
   function sendProfile() {
     request();
