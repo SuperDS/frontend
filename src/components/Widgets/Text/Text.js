@@ -53,9 +53,18 @@ function TextEditor(props) {
             data={originText}
             config={{
               toolbar: {
-                items: ['heading', '|', 'link', 'bold', 'italic', 'alignment'],
+                items: [
+                  'heading',
+                  'fontfamily',
+                  'fontsize',
+                  '|',
+                  'link',
+                  'bold',
+                  'italic',
+                  'alignment',
+                ],
                 isFloating: true,
-                shouldGroupWhenFull: true,
+                shouldNotGroupWhenFull: true,
               },
               placeholder: '텍스트를 입력하세요!',
               heading: {
