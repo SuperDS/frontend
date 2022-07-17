@@ -4,11 +4,12 @@ import { useState } from 'react';
 import { useHistory } from 'react-router';
 import { useMyInfo } from '../../hooks/myInfo';
 
-function MultiHeader() {
-  const pages = ['image', 'video', 'info', '하이', '바밤바'];
+function MultiHeader({ pagesData }) {
   const [selected, setSelected] = useState('');
   const { myInfo } = useMyInfo();
   const history = useHistory();
+
+  const { singlePages: pages, title } = pagesData;
 
   const navList = pages.map((page, i) => {
     const selectPage = (index) => {
@@ -33,7 +34,7 @@ function MultiHeader() {
   return (
     <header>
       <div css={displayCenter}>
-        <h1>제목</h1>
+        <h1>{title}</h1>
       </div>
       <div css={displayCenter}>
         <ul>{navList}</ul>

@@ -11,7 +11,6 @@ import VideoBox from '../Widgets/Video/VideoBox';
 // width에 따라서 모바일버전 on, off
 export function isMobile(width) {
   if (width <= breakpoints[0]) return true;
-  console.log('123');
   return false;
 }
 

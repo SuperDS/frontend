@@ -9,14 +9,13 @@ function MultiPage() {
     url: 'heom',
     thumbnail: 'www.url',
     user_seq: 12345,
-    singlePages: [],
+    singlePages: ['image', 'video', 'info', '하이', '바밤바'],
     isPresentation: {},
   };
-  console.log(pagesData);
   return (
     <PageWrapper>
       <NormalWrapper>
-        <MultiHeader />
+        <MultiHeader pagesData={pagesData} />
         <SinglePage theme='MultiPage' />
       </NormalWrapper>
     </PageWrapper>
