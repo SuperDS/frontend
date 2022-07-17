@@ -1,5 +1,5 @@
 import { useGetUrl } from '../hooks/util';
-import { TYPE_IMAGE, TYPE_NEW, TYPE_VIDEO } from './constantValue';
+import { TYPE_IMAGE, TYPE_NEW, TYPE_TEXT, TYPE_VIDEO } from './constantValue';
 
 export function getApiEndpoint() {
   const endpoint =
@@ -10,7 +10,7 @@ export function getApiEndpoint() {
   return endpoint;
 }
 
-export function getLoginState() {
+export function GetLoginState() {
   const user_seq = localStorage.getItem('user_seq');
   const page_user_seq = useGetUrl();
 
@@ -112,9 +112,10 @@ export function isNewWidget(type) {
 export function convertType2String(type) {
   if (type === TYPE_IMAGE) {
     return 'image';
-  }
-  if (type === TYPE_VIDEO) {
+  } else if (type === TYPE_VIDEO) {
     return 'video';
+  } else if (type === TYPE_TEXT) {
+    return 'text';
   }
   return 'none';
 }

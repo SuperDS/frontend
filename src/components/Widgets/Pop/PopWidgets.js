@@ -21,12 +21,14 @@ function PopWidgets() {
     );
   };
 
-  return (
+  return modal.popUpWindowType !== 'text' ? (
     <div style={backGroundPopStyle}>
-      <div style={widgetBoxPopStyle}>
-        <PopTypeComponent endPop={endPop} />
-      </div>
+      {/* <div style={widgetBoxPopStyle}> */}
+      <PopTypeComponent endPop={endPop} />
+      {/* </div> */}
     </div>
+  ) : (
+    <></>
   );
 }
 
@@ -39,17 +41,17 @@ const backGroundPopStyle = {
   minHeight: `calc(100vh)`,
 };
 
-// 이거 Css
-const widgetBoxPopStyle = {
-  position: 'fixed',
-  zIndex: '11',
-  top: `50%`,
-  left: `50%`,
-  transform: 'translate(-50%, -50%)',
-  width: '540px',
-  height: `250px`,
-  backgroundColor: 'white',
-  borderRadius: '20px',
-};
+// 이거 Css -> PopTypeComponent로 이동
+// const widgetBoxPopStyle = {
+//   position: 'fixed',
+//   zIndex: '11',
+//   top: `50%`,
+//   left: `50%`,
+//   transform: 'translate(-50%, -50%)',
+//   width: '540px',
+//   height: `250px`,
+//   backgroundColor: 'white',
+//   borderRadius: '20px',
+// };
 
 export default PopWidgets;

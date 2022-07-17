@@ -5,12 +5,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ToolBarButton } from '..';
 import { createReplacementModalAction } from '../../redux/slice';
 import { img, video, text } from '../../asset/index';
+import { useInitWidget } from '../../hooks/widget';
+import { TYPE_TEXT } from '../../utils/constantValue';
 
 function ToolBar() {
   const dispatch = useDispatch();
   const { modal } = useSelector((state) => ({
     modal: state.info.modal,
   }));
+
+  const { init } = useInitWidget();
 
   const widgetList = [
     { type: 'image', label: '그림', emoji: img },
@@ -24,13 +28,25 @@ function ToolBar() {
     emoji: value.emoji,
     type: value.type,
     onClick: () => {
-      dispatch(
-        createReplacementModalAction({
-          ...modal,
-          popUpWindow: true,
-          popUpWindowType: value.type,
-        })
-      );
+      if (value.type !== 'text') {
+        dispatch(
+          createReplacementModalAction({
+            ...modal,
+            popUpWindow: true,
+            popUpWindowType: value.type,
+          })
+        );
+      } else {
+        const thumbnail = '';
+        dispatch(
+          createReplacementModalAction({
+            ...modal,
+            popUpWindow: false,
+            popUpWindowType: value.type,
+          })
+        );
+        init({ type: TYPE_TEXT, data: { thumbnail } });
+      }
     },
   }));
 
