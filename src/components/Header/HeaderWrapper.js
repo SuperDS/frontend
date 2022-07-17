@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { css } from '@emotion/css';
 import { HEADER_HEIGHT } from '../../styles/style';
 
-function headerWrapper({ children }) {
+function HeaderWrapper({ children }) {
   const [left, setLeft] = useState(0);
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
@@ -39,4 +39,4 @@ function headerWrapper({ children }) {
   );
 }
 
-export default headerWrapper;
+export default HeaderWrapper;

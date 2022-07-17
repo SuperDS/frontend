@@ -10,7 +10,7 @@ export function getApiEndpoint() {
   return endpoint;
 }
 
-export function getLoginState() {
+export function GetLoginState() {
   const user_seq = localStorage.getItem('user_seq');
   const page_user_seq = useGetUrl();
 
