@@ -175,6 +175,7 @@ const widgetFrame = css`
   border-diameter: ${WIDGET_COMMON_RADIUS};
 `;
 
+/*
 const positionAbsolute = css`
   position: absolute;
 `;
@@ -186,3 +187,4 @@ const hoverBackground = css`
   opacity: 0.2;
   background-color: #000;
 `;
+*/
