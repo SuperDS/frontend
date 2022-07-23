@@ -101,6 +101,7 @@ function EditMode() {
       setStatAnimationEnd(0);
     }
   };
+
   return (
     <PageWrapper>
       {userMatched && (

@@ -16,6 +16,7 @@ import {
   TYPE_NONEDISPLAY,
   TYPE_NEW,
   TYPE_TEXT,
+  ACTION_EDIT,
 } from '../../utils/constantValue';
 import ImageBox from './Image/ImageBox';
 import VideoBox from './Video/VideoBox';
@@ -25,6 +26,7 @@ import { WIDGET_COMMON_RADIUS } from '../../styles/style';
 import { convertType2String, isNewWidget } from '../../utils/util';
 import { commonBtn, getAbsoluteBtn } from '../../styles/GlobalStyles';
 import TextBox from './Text/TextBox';
+import { useReverseStaticWidget } from '../../hooks/widget';
 
 export function WidgetElement({
   element,
@@ -59,17 +61,25 @@ export function WidgetElement({
     );
   };
 
+  const { reverseStatic } = useReverseStaticWidget();
+
   const openEditModalByType = (id, type) => {
     const stringType = convertType2String(type);
-    const popUpWindow = type !== TYPE_TEXT;
-    dispatch(
-      createReplacementModalAction({
-        ...modal,
-        targetWidgetId: id,
-        popUpWindow: { popUpWindow },
-        popUpWindowType: stringType,
-      })
-    );
+    if (type !== TYPE_TEXT) {
+      dispatch(
+        createReplacementModalAction({
+          ...modal,
+          targetWidgetId: id,
+          popUpWindow: true,
+          popUpWindowType: stringType,
+        })
+      );
+    } else if (type === TYPE_TEXT) {
+      const changed = JSON.parse(JSON.stringify(widgets.list));
+      const targetItem = changed.find((widget) => widget.i === id);
+      // 임시로 getNewWidgetList 에서 처리. Redux 비동기 처리 적용하면 별도 훅으로 분리
+      // reverseStatic(id, !targetItem.static);
+    }
   };
 
   function getNewWidgetList(targetItemIndex, newAction) {
@@ -79,6 +89,10 @@ export function WidgetElement({
       found.widget_action = newAction;
     } else if (found.widget_action !== ACTION_CREATE) {
       found.widget_action = newAction;
+    }
+    // Text 위젯 이동 고정처리 임시 방편
+    if (found.widget_type === TYPE_TEXT && newAction === ACTION_EDIT) {
+      found.static = !found.static;
     }
     return newList;
   }
@@ -109,12 +123,19 @@ export function WidgetElement({
       );
     }
   }
+
+  const newList = JSON.parse(JSON.stringify(widgets.list));
+  const targetId = modal.targetWidgetId;
+  const found = newList.find((widget) => widget.i === targetId);
+  const isPinned = found.static === true;
+
   const diameter = 44;
-  const { btn, img } = getAbsoluteBtn(5, 33, diameter / 2);
+  const { btn, img } = getAbsoluteBtn(10, -18, diameter / 2);
   const { btn: settingBtn, img: settingBtnImg } = getAbsoluteBtn(
-    5,
-    5,
-    diameter / 2
+    31,
+    -18,
+    diameter / 2,
+    isPinned
   );
 
   return (

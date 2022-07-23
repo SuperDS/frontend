@@ -219,7 +219,12 @@ export const commonBtn = css`
   overflow: hidden;
 `;
 
-export function getAbsoluteBtn(top, right, r) {
+export function getAbsoluteBtn(top, right, r, pinned) {
+  console.log(pinned);
+  let isPinned = 0;
+  if (pinned === true) {
+    isPinned = -(44 / 2);
+  }
   const btn = css`
     top: ${top}px;
     right: ${right}px;
@@ -232,7 +237,7 @@ export function getAbsoluteBtn(top, right, r) {
 
   const img = css`
     position: absolute;
-    top: 0px;
+    top: ${isPinned}px;
     right: 0px;
     &:hover {
       top: calc(-1 * ${r}px);

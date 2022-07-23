@@ -5,15 +5,13 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import InlineEditor from 'ckeditor5-custom-build/build/ckeditor';
 import { createReplacementModalAction } from '../../../redux/slice';
 import { TYPE_TEXT } from '../../../utils/constantValue';
-import { useInitWidget } from '../../../hooks/widget';
+import { useUpdateTextWidgetData } from '../../../hooks/widget';
 
 function TextEditor(props) {
   const { widgets, modal } = useSelector((state) => ({
     widgets: state.info.widgets,
     modal: state.info.modal,
   }));
-
-  const { init } = useInitWidget();
 
   const dispatch = useDispatch();
   const setEditorWidgetId = (id) => {
@@ -27,21 +25,25 @@ function TextEditor(props) {
 
   const [thumbnail, setThumbnail] = useState('');
 
-  const handleSubmit = useCallback(() => {
-    if (modal.targetWidgetId !== '-1') {
-      init({ type: TYPE_TEXT, data: { thumbnail } });
-    }
-  }, [thumbnail]);
+  const { updateTextData } = useUpdateTextWidgetData();
 
-  useEffect(() => {
-    if (originText !== thumbnail) {
-      handleSubmit();
-    }
-  }, [thumbnail, handleSubmit]);
+  // const handleSubmit = useCallback(() => {
+  //   if (modal.targetWidgetId !== '-1') {
+  //     updateTextData(thumbnail);
+  //   }
+  // }, [thumbnail]);
 
   const originText = widgets.list.find(
     (element) => element.i === props.widgetId
   ).widget_data.thumbnail;
+
+  // useEffect(() => {
+  //   console.log(originText);
+  //   console.log(thumbnail);
+  //   if (originText !== thumbnail) {
+  //     handleSubmit();
+  //   }
+  // }, [thumbnail, handleSubmit]);
 
   return (
     <div className='TextEditor'>
@@ -53,16 +55,7 @@ function TextEditor(props) {
             data={originText}
             config={{
               toolbar: {
-                items: [
-                  'heading',
-                  'fontfamily',
-                  'fontsize',
-                  '|',
-                  'link',
-                  'bold',
-                  'italic',
-                  'alignment',
-                ],
+                items: ['heading', '|', 'link', 'bold', 'italic', 'alignment'],
                 isFloating: true,
                 shouldNotGroupWhenFull: true,
               },
@@ -119,7 +112,8 @@ function TextEditor(props) {
             }}
             onChange={(event, editor) => {
               const data = editor.getData();
-              setThumbnail(data);
+              // setThumbnail(data);
+              updateTextData(data);
             }}
           />
         </div>
