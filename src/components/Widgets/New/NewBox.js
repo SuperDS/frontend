@@ -1,12 +1,40 @@
 /** @jsxImportSource @emotion/react */
 import React from 'react';
 import { css } from '@emotion/react';
+import { useSelector, useDispatch } from 'react-redux';
 import { WIDGET_COMMON_RADIUS } from '../../../styles/style';
 import { logoImg } from '../../../asset/index';
+import { createReplacementModalAction } from '../../../redux/slice';
 
-function NewBox() {
+function NewBox({ element }) {
+  const { modal } = useSelector((state) => ({
+    modal: state.info.modal,
+  }));
+
+  const dispatch = useDispatch();
+  const setEditorWidgetId = (id) => {
+    dispatch(
+      createReplacementModalAction({
+        ...modal,
+        targetWidgetId: id,
+      })
+    );
+  };
+
   return (
-    <div css={newWidget}>
+    <div
+      css={newWidget}
+      onClick={() => {
+        if (element.i !== undefined && element.i !== -1) {
+          setEditorWidgetId(element.i);
+        }
+      }}
+      onKeyDown={() => {
+        if (element.i !== undefined && element.i !== -1) {
+          setEditorWidgetId(element.i);
+        }
+      }}
+    >
       <img css={newWidgetNoticeStyle} src={logoImg} />
     </div>
   );

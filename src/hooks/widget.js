@@ -184,7 +184,6 @@ export function useAddEmptyWidget() {
     widgets: state.info.widgets,
   }));
   const { updateWidgets } = useUpdateWidgetsData();
-
   const addEmptyWidget = (mouseOverWidget) => {
     const newWidget = {
       widget_action: ACTION_CREATE,
@@ -196,6 +195,7 @@ export function useAddEmptyWidget() {
       y: mouseOverWidget[0].y,
       w: newWidgetWidth,
       h: newWidgetHeight,
+      static: false,
     };
     const converted = widgets.list.filter(
       (element) => element.widget_type !== TYPE_NEW
@@ -205,4 +205,74 @@ export function useAddEmptyWidget() {
   return {
     addEmptyWidget,
   };
+}
+
+export function useReverseStaticWidget() {
+  const dispatch = useDispatch();
+  const { widgets } = useSelector((state) => ({
+    widgets: state.info.widgets,
+  }));
+
+  const reverseStaticWidget = (_widgetId, _nextState) => {
+    const changed = JSON.parse(JSON.stringify(widgets.list));
+    const targetItem = changed.find((widget) => widget.i === _widgetId);
+    if (
+      targetItem.widget_action === ACTION_NONE ||
+      targetItem.widget_code !== ''
+    ) {
+      targetItem.widget_action = ACTION_EDIT;
+    }
+    targetItem.static = _nextState;
+    updateRedux(changed);
+  };
+
+  const updateRedux = (changed) => {
+    if (changed) {
+      dispatch(
+        createReplacementWidgetsAction({
+          ...widgets,
+          list: changed,
+        })
+      );
+    }
+  };
+
+  const reverseStatic = ({ widgetId, nextState }) => {
+    if (widgetId && nextState) reverseStaticWidget(widgetId.id, nextState);
+  };
+  return { reverseStatic };
+}
+
+export function useUpdateTextWidgetData() {
+  const { modal, widgets } = useSelector((state) => ({
+    modal: state.info.modal,
+    widgets: state.info.widgets,
+  }));
+  const dispatch = useDispatch();
+
+  const updateTextData = (changedText) => {
+    console.log('updating textData');
+    console.log(changedText);
+    if (modal.targetWidgetId !== '-1') {
+      const changed = JSON.parse(JSON.stringify(widgets.list));
+      const targetId = modal.targetWidgetId;
+      const targetItem = changed.find((widget) => widget.i === targetId);
+
+      targetItem.widget_data.thumbnail = changedText;
+      if (
+        targetItem.widget_action === ACTION_NONE ||
+        targetItem.widget_code !== ''
+      ) {
+        targetItem.widget_action = ACTION_EDIT;
+      }
+      dispatch(
+        createReplacementWidgetsAction({
+          ...widgets,
+          list: changed,
+        })
+      );
+    }
+  };
+
+  return { updateTextData };
 }

@@ -88,6 +88,7 @@ function EditModeGrid() {
 
   // delete처리 된 위젯 필터링
   const layoutInfo = useMemo(() => {
+    // console.log('update layoutInfo');
     const newList = widgets.list.filter(function (element) {
       return element.widget_action !== 'D';
     });
