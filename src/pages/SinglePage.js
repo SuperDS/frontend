@@ -12,21 +12,19 @@ import {
   urlOwnerNotFound,
   urlMatched,
 } from '../utils/util';
-import { useGetUrl } from '../hooks/util';
 import { useMyInfo } from '../hooks/myInfo';
 import { useSaveWidgetsFromServer } from '../hooks/widget';
 import { useRequest } from '../hooks/useRequest';
 import Mobile, { isMobile } from '../components/SinglePage/Mobile';
 
-function SinglePage({ theme }) {
-  const pageUrl = useGetUrl();
+function SinglePage({ theme, pageNow }) {
   const [userSeq, setUserSeq] = useState(null);
   const [userMatched, setUserMatched] = useState(null);
   const [nickname, setNickname] = useState(null);
   const history = useHistory();
   const { myInfo } = useMyInfo();
   const { res: pageUserRes, request: requestPageUserInfo } = useRequest({
-    endpoint: `${getApiEndpoint()}/url/${pageUrl}/user`,
+    endpoint: `${getApiEndpoint()}/url/${pageNow}/user`,
     method: 'get',
   });
 
@@ -48,9 +46,9 @@ function SinglePage({ theme }) {
   // 내 페이지인지 남의 페이지인지 확인 로직
   useEffect(() => {
     // 로그인 유무
-    if (pageUrl) {
+    if (pageNow) {
       // 내 페이지일 경우
-      if (myInfo && urlMatched(myInfo.url, pageUrl)) {
+      if (myInfo && urlMatched(myInfo.url, pageNow)) {
         setUserMatched(true);
         setUserSeq(myInfo.user_seq);
         setNickname(myInfo.nickname);
@@ -66,7 +64,7 @@ function SinglePage({ theme }) {
       setUserSeq(null);
       setNickname(null);
     };
-  }, [pageUrl, myInfo]);
+  }, [pageNow, myInfo]);
 
   // pageUserRes에 변화가 있으면 -> 데이터를 받아서 userseq, nickname 세팅.
   useEffect(() => {
@@ -120,7 +118,7 @@ function SinglePage({ theme }) {
           {theme === 'normalPage' && (
             <Header
               userMatch={userMatched}
-              pageUrl={pageUrl}
+              pageNow={pageNow}
               pageUserName={nickname}
               pageType='normal'
             />

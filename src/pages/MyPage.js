@@ -8,7 +8,7 @@ import AddPagePopUp from '../components/MyPage/AddPagePopUp';
 import PageBlock from '../components/MyPage/PageBlock';
 import { useMyInfo } from '../hooks/myInfo';
 import { useRequest } from '../hooks/useRequest';
-import { useGetUrl } from '../hooks/util';
+import { useGetPersonalUrl } from '../hooks/useParamsUrl';
 import {
   getApiEndpoint,
   isError,
@@ -45,7 +45,7 @@ function MyPage() {
   };
   const { myInfo } = useMyInfo();
   const history = useHistory();
-  const pageUrl = useGetUrl();
+  const pageUrl = useGetPersonalUrl();
   const [userSeq, setUserSeq] = useState(null);
   const [userMatched, setUserMatched] = useState(null);
   const [nickname, setNickname] = useState(null);

@@ -1,4 +1,4 @@
-import { useGetUrl } from '../hooks/util';
+import { useGetPersonalUrl } from '../hooks/useParamsUrl';
 import { TYPE_IMAGE, TYPE_NEW, TYPE_TEXT, TYPE_VIDEO } from './constantValue';
 
 export function getApiEndpoint() {
@@ -12,7 +12,7 @@ export function getApiEndpoint() {
 
 export function GetLoginState() {
   const user_seq = localStorage.getItem('user_seq');
-  const page_user_seq = useGetUrl();
+  const page_user_seq = useGetPersonalUrl();
 
   if (user_seq === page_user_seq) {
     return true;
