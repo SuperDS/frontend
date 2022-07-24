@@ -13,7 +13,6 @@ import {
   OrangeN,
   OrangeO,
   OrangeT,
-  // OwnWeb,
 } from '../../asset/index';
 
 function MainContents() {

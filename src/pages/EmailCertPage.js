@@ -3,7 +3,7 @@ import React, { useEffect, useMemo } from 'react';
 import { css } from '@emotion/react';
 import { PageWrapper } from '../components';
 import { useRequest } from '../hooks/useRequest';
-import { useGetCode, useGetEmail } from '../hooks/util';
+import { useGetCode, useGetEmail } from '../hooks/useParamsUrl';
 import { getApiEndpoint, isOk } from '../utils/util';
 import { COLOR_STYLE, FlexColCenter } from '../styles/GlobalStyles';
 
