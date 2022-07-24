@@ -121,7 +121,10 @@ function EditMode() {
                 <button
                   type='button'
                   css={[commonButtonStyle, moveHidden]}
-                  onClick={() => post(widgets.list)}
+                  onClick={() => {
+                    console.log(widgets.list);
+                    post(widgets.list);
+                  }}
                 >
                   저장하기
                 </button>

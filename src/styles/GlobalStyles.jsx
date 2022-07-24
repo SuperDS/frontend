@@ -220,7 +220,6 @@ export const commonBtn = css`
 `;
 
 export function getAbsoluteBtn(top, right, r, pinned) {
-  console.log(pinned);
   let isPinned = 0;
   if (pinned === true) {
     isPinned = -(44 / 2);

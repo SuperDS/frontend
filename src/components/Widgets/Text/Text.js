@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import InlineEditor from 'ckeditor5-custom-build/build/ckeditor';
 import { createReplacementModalAction } from '../../../redux/slice';
-import { TYPE_TEXT } from '../../../utils/constantValue';
 import { useUpdateTextWidgetData } from '../../../hooks/widget';
 
 function TextEditor(props) {
@@ -23,7 +22,15 @@ function TextEditor(props) {
     );
   };
 
-  const [thumbnail, setThumbnail] = useState('');
+  const newList = JSON.parse(JSON.stringify(widgets.list));
+  const targetId = modal.targetWidgetId;
+  const found = newList.find((widget) => widget.i === targetId);
+  let isPinned;
+  if (found?.static !== undefined) {
+    isPinned = found.static === true;
+  }
+
+  // const [thumbnail, setThumbnail] = useState('');
 
   const { updateTextData } = useUpdateTextWidgetData();
 

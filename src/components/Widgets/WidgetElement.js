@@ -99,7 +99,7 @@ export function WidgetElement({
 
   function classifyBox(curInfo) {
     if (curInfo.widget_type === TYPE_NEW) {
-      return <NewBox />;
+      return <NewBox element={element} />;
     } else if (curInfo.widget_type === TYPE_IMAGE) {
       return <ImageBox element={element} mode={mode} />;
     } else if (curInfo.widget_type === TYPE_VIDEO) {
@@ -127,13 +127,16 @@ export function WidgetElement({
   const newList = JSON.parse(JSON.stringify(widgets.list));
   const targetId = modal.targetWidgetId;
   const found = newList.find((widget) => widget.i === targetId);
-  const isPinned = found.static === true;
+  let isPinned = false;
+  if (found?.static !== undefined) {
+    isPinned = found.static === true;
+  }
 
   const diameter = 44;
-  const { btn, img } = getAbsoluteBtn(10, -18, diameter / 2);
+  const { btn, img } = getAbsoluteBtn(5, 33, diameter / 2);
   const { btn: settingBtn, img: settingBtnImg } = getAbsoluteBtn(
-    31,
-    -18,
+    5,
+    5,
     diameter / 2,
     isPinned
   );
@@ -142,7 +145,10 @@ export function WidgetElement({
     <div
       key={layout.i}
       css={[widgetFrame]}
-      onMouseEnter={() => {
+      onClick={() => {
+        setHover(true);
+      }}
+      onKeyDown={() => {
         setHover(true);
       }}
       onMouseLeave={() => {
