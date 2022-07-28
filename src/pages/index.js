@@ -1,19 +1,21 @@
 import EditModePage from './EditModePage';
-import NormalModePage from './NormalModePage';
+import SinglePage from './SinglePage';
 import SplashPage from './SplashPage';
 import MainPage from './MainPage';
 import FeedbackPage from './FeedbackPage';
 import JoinPage from './JoinPage';
 import EmailCertPage from './EmailCertPage';
 import MyPage from './MyPage';
+import MultiPage from './MultiPage';
 
 export {
   JoinPage,
   EditModePage,
-  NormalModePage,
+  SinglePage,
   SplashPage,
   MainPage,
   FeedbackPage,
   EmailCertPage,
   MyPage,
+  MultiPage,
 };

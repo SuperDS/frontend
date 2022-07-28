@@ -8,7 +8,7 @@ import { PageWrapper, EditModeGrid, EditWrapper } from '../components';
 import { getApiEndpoint, urlMatched } from '../utils/util';
 import useRequestAuth from '../hooks/useRequestAuth';
 import { usePostData, useSaveWidgetsFromServer } from '../hooks/widget';
-import { useGetUrl } from '../hooks/util';
+import { useGetPersonalUrl } from '../hooks/useParamsUrl';
 import { useMyInfo } from '../hooks/myInfo';
 import { mainColor } from '../styles/color';
 import { edit_toggle } from '../asset';
@@ -18,7 +18,7 @@ function EditMode() {
     widgets: state.info.widgets,
     modal: state.info.modal,
   }));
-  const pageUrl = useGetUrl();
+  const pageUrl = useGetPersonalUrl();
   const [userSeq, setUserSeq] = useState(null);
   const [userMatched, setUserMatched] = useState(null);
   const history = useHistory();
@@ -101,6 +101,7 @@ function EditMode() {
       setStatAnimationEnd(0);
     }
   };
+
   return (
     <PageWrapper>
       {userMatched && (
@@ -120,7 +121,10 @@ function EditMode() {
                 <button
                   type='button'
                   css={[commonButtonStyle, moveHidden]}
-                  onClick={() => post(widgets.list)}
+                  onClick={() => {
+                    console.log(widgets.list);
+                    post(widgets.list);
+                  }}
                 >
                   저장하기
                 </button>

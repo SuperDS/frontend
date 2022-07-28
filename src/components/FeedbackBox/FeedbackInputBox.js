@@ -18,7 +18,8 @@ function FeedbackInputBox(props) {
     bottomText: '',
   });
   const { loggedIn } = useMyInfo();
-  const endpoint = `${getApiEndpoint()}/feedback/register`;
+  const userSeq = localStorage.getItem('user_seq');
+  const endpoint = `${getApiEndpoint()}/feedback/register/${userSeq}`;
 
   const feedbackRef = useRef(null);
 
