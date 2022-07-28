@@ -26,6 +26,8 @@ function App() {
         {/* 나중에 pageUrl로 바껴야 됨 */}
         <Route exact path='/:id/bi' component={NormalModePage} />
         <Route exact path='/:id/edit' component={EditModePage} />
+        <Route exact path='/:id/:url/edit' component={EditModePage} />
+        <Route exact path='/:id/:url/' component={NormalModePage} />
         <Route
           exact
           path='/certificate/:email/:code'
